@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Receipt {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items   Item[]
+  store   Store  @relation(fields: [storeId], references: [id])
+  storeId String
+}
+
+model Store {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  address   String?
+  name      String
+  company   Company   @relation(fields: [companyId], references: [id])
+  Receipt   Receipt[]
+  companyId String
+}
+
+model Company {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String
+  Store Store[]
+}
+
+model Item {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name          String
+  price         Float
+  quantity      Int
+  packQunantiti Int      @default(1)
+  Receipt       Receipt? @relation(fields: [receiptId], references: [id])
+  receiptId     String?
+}
