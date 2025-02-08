@@ -1,39 +1,15 @@
+"use client";
+
+import { useState } from "react";
+import ScanForm from "./scanForm";
+import ScanResult from "./scanResult";
+
 export default function Scan() {
+  const [file, setFile] = useState<File | null>(null);
+
   return (
-    <div className="h-screen bg-base-400">
-      Scan
-      <form>
-        <table className="table">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Blue</td>
-            </tr>
-            <tr>
-              <th>2</th>
-              <td>Hart Hagerty</td>
-              <td>Desktop Support Technician</td>
-              <td>Purple</td>
-            </tr>
-            <tr>
-              <th>3</th>
-              <td>Brice Swyre</td>
-              <td>Tax Accountant</td>
-              <td>Red</td>
-            </tr>
-          </tbody>
-        </table>
-      </form>
+    <div className="h-full bg-base-400">
+      {file ? <ScanResult file={file} /> : <ScanForm onFileUploaded={(file) => setFile(file)} />}
     </div>
   );
 }
