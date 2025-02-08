@@ -1,9 +1,14 @@
-import './resultPanel.css';
+import AdditionalMetadata from "./additionalMetdata";
 
 export default function ResultPanel() {
     return (
         <div className="overflow-x-auto">
             <table className="table w-full receipt-table">
+                <colgroup>
+                    <col span={1} className="w-1/2" />
+                    <col span={1} className="w-1/4" />
+                    <col span={1} className="w-1/4" />
+                </colgroup>
                 <thead>
                     <tr>
                         <th>Name</th>
@@ -34,6 +39,7 @@ export default function ResultPanel() {
                     </tr>
                 </tbody>
             </table>
+            <AdditionalMetadata metadata={[{name: 'Store', value: 'Biedronka, Polska'}]} />
         </div>
     );
 }
