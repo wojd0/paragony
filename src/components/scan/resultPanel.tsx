@@ -1,5 +1,6 @@
 import { metadata } from "@/app/layout";
 import AdditionalMetadata, { ReceiptMetdata } from "./AdditionalMetdata";
+import FlagPanel, { ItemFlags } from "./FlagPanel";
 
 export interface ReceiptItem {
   name: string;
@@ -11,9 +12,10 @@ export interface Receipt {
   items: ReceiptItem[];
   metadata: ReceiptMetdata[];
   total: number;
+  flags: ItemFlags
 }
 
-export default function ResultPanel({ receipt: { items, metadata, total } }: { receipt: Receipt }) {
+export default function ResultPanel({ items, metadata, total, flags }: Receipt) {
   return (
     <div className="overflow-x-auto">
       <table className="table w-full receipt-table">
@@ -39,12 +41,14 @@ export default function ResultPanel({ receipt: { items, metadata, total } }: { r
           ))}
           <tr className="border-t-2">
             <td></td>
-            <td>Total</td>
-            <td>{total} PLN</td>
+            <td className="text-right">Total</td>
+            <td className="text-right font-bold underline underline-offset-2">{total} PLN</td>
           </tr>
         </tbody>
       </table>
       <AdditionalMetadata metadata={metadata} />
+      <div className="h-6"></div>
+      <FlagPanel flags={flags} />
     </div>
   );
 }

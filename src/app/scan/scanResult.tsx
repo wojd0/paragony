@@ -9,6 +9,7 @@ const mockItems: Receipt = {
   ],
   metadata: [{ name: "Store", value: "Bideronka, ul. Wesoła 12, 12-345 Warszawa" }],
   total: 7.5,
+  flags: { red: 1.12, yellow: 2.4 },
 };
 
 export default function ScanResult({ file }: { file: File }) {
@@ -30,7 +31,7 @@ export default function ScanResult({ file }: { file: File }) {
       <div className="flex-grow">
         <h2 className="text-4xl font-bold text-center">Scan result</h2>
         <div className="w-full md:w-3/4 mx-auto mt-10">
-          <ResultPanel receipt={mockItems} />
+          <ResultPanel flags={mockItems.flags} items={mockItems.items} metadata={mockItems.metadata} total={mockItems.total} />
         </div>
       </div>
     </div>
