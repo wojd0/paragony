@@ -1,6 +1,6 @@
 export interface ReceiptMetdata {
-    name: string;
-    value: string;
+  name: string;
+  value: string;
 }
 
 export default function AdditionalMetadata({ metadata = [] }: { metadata: ReceiptMetdata[] }) {

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import ScanForm from "./scanForm";
-import ScanResult from "./scanResult";
+import ScanForm from "./ScanForm";
+import ScanResult from "./ScanResult";
 
 export default function Scan() {
   const [file, setFile] = useState<File | null>(null);
