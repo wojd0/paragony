@@ -1,6 +1,6 @@
-import AdditionalMetadata, { ReceiptMetdata } from "./AdditionalMetdata";
-import FlagPanel from "./FlagPanel";
-import FlagSelector from "./FlagSelector";
+import AdditionalMetadata, { ReceiptMetdata } from './AdditionalMetdata';
+import FlagPanel from './FlagPanel';
+import FlagSelector from './FlagSelector';
 
 export interface ReceiptItem {
    name: string;
@@ -33,16 +33,25 @@ export default function ResultPanel({
    function handleEnabledFlagsChange(enabledFlags: string[]) {
       const newItems = items.map((item) => ({
          ...item,
-         selectedFlags: item.selectedFlags.filter((flag) => enabledFlags.includes(flag)),
+         selectedFlags: item.selectedFlags.filter((flag) =>
+            enabledFlags.includes(flag),
+         ),
       }));
 
-      onReceiptChange({ items: newItems, metadata, total, flags: [...enabledFlags] });
+      onReceiptChange({
+         items: newItems,
+         metadata,
+         total,
+         flags: [...enabledFlags],
+      });
    }
 
    return (
       <div className="">
          <div className="max-w-full overflow-x-auto">
-            <table className={`table receipt-table ${flags.length === 0 ? '[&_td:nth-child(1)]:hidden [&_th:nth-child(1)]:hidden [&_col:nth-child(1)]:hidden' : ''}`}>
+            <table
+               className={`table receipt-table ${flags.length === 0 ? '[&_td:nth-child(1)]:hidden [&_th:nth-child(1)]:hidden [&_col:nth-child(1)]:hidden' : ''}`}
+            >
                <colgroup>
                   <col className="w-1/12" />
                   <col />
@@ -66,28 +75,38 @@ export default function ResultPanel({
                            <FlagSelector
                               flags={flags}
                               selectedFlags={item.selectedFlags}
-                              onFlagsChanged={(changedFlags) => handleFlagsSelection(index, changedFlags)}
+                              onFlagsChanged={(changedFlags) =>
+                                 handleFlagsSelection(index, changedFlags)
+                              }
                            />
                         </td>
                         <td>{item.name}</td>
                         <td className="text-right">{item.amount}</td>
                         <td className="text-right">{item.price}&nbsp;PLN</td>
-                        <td className="text-right">{item.totalPrice || item.price * item.amount}&nbsp;PLN</td>
+                        <td className="text-right">
+                           {item.totalPrice || item.price * item.amount}
+                           &nbsp;PLN
+                        </td>
                      </tr>
                   ))}
                   <tr className="border-t-2">
                      <td />
                      <td colSpan={2} />
                      <td className="text-right">Total</td>
-                     <td className="text-right font-bold underline underline-offset-2">{total} PLN</td>
+                     <td className="text-right font-bold underline underline-offset-2">
+                        {total} PLN
+                     </td>
                   </tr>
                </tbody>
             </table>
-
          </div>
          <AdditionalMetadata metadata={metadata} />
          <div className="h-6"></div>
-         <FlagPanel flags={flags} items={items} onFlagsChange={handleEnabledFlagsChange} />
+         <FlagPanel
+            flags={flags}
+            items={items}
+            onFlagsChange={handleEnabledFlagsChange}
+         />
       </div>
    );
 }

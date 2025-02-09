@@ -1,22 +1,22 @@
-import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
-import { FlagIcon as FlagIconSolid } from "@heroicons/react/24/solid";
-import { FlagIcon as FlagIconOutline } from "@heroicons/react/24/outline";
-import { ReceiptItem } from "./ResultPanel";
-import { useMemo } from "react";
+import { PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
+import { FlagIcon as FlagIconSolid } from '@heroicons/react/24/solid';
+import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
+import { ReceiptItem } from './ResultPanel';
+import { useMemo } from 'react';
 
 const availableFlags = [
-   "red",
-   "blue",
-   "green",
-   "yellow",
-   "purple",
-   "pink",
-   "indigo",
-   "cyan",
-   "teal",
-   "lime",
-   "amber",
-   "orange",
+   'red',
+   'blue',
+   'green',
+   'yellow',
+   'purple',
+   'pink',
+   'indigo',
+   'cyan',
+   'teal',
+   'lime',
+   'amber',
+   'orange',
 ];
 
 export default function FlagPanel({
@@ -43,13 +43,18 @@ export default function FlagPanel({
          }),
       ]);
       const unflaggedTotal =
-         items.filter((item) => item.selectedFlags.length === 0).reduce((acc, item) => acc + item.totalPrice, 0) || 0;
+         items
+            .filter((item) => item.selectedFlags.length === 0)
+            .reduce((acc, item) => acc + item.totalPrice, 0) || 0;
 
-      return {  transparent: unflaggedTotal, ...calculatedSelectedFlags };
+      return { transparent: unflaggedTotal, ...calculatedSelectedFlags };
    }, [flags, items]);
 
    function handleFlagAdded() {
-      onFlagChange([...flags, availableFlags.find((flag) => !flags.includes(flag)) || ""]);
+      onFlagChange([
+         ...flags,
+         availableFlags.find((flag) => !flags.includes(flag)) || '',
+      ]);
    }
 
    function handleFlagRemoved(flag: string) {
@@ -60,8 +65,11 @@ export default function FlagPanel({
       <div className="card bg-base-200 w-full min-h-24">
          <div className="card-content p-3 flex flex-wrap">
             {Object.entries(calculatedFlags).map(([color, total]) => (
-               <button key={color} className="btn btn-ghost h-full whitespace-nowrap relative group basis-1/2 md:basis-1/5">
-                  {color === "transparent" ? (
+               <button
+                  key={color}
+                  className="btn btn-ghost h-full whitespace-nowrap relative group basis-1/2 md:basis-1/5"
+               >
+                  {color === 'transparent' ? (
                      <FlagIconOutline className={`w-6`} />
                   ) : (
                      <FlagIconSolid className={`w-6`} fill={color} />
@@ -73,7 +81,7 @@ export default function FlagPanel({
                      <span className="text-md">{total} PLN</span>
                   </span>
 
-                  {color !== "transparent" && (
+                  {color !== 'transparent' && (
                      <div
                         className="sm:opacity-0 sm:group-hover:opacity-100 btn-circle h-5 w-5 p-1 absolute top-0 right-0 bg-red-600"
                         onClick={() => handleFlagRemoved(color)}
@@ -84,7 +92,10 @@ export default function FlagPanel({
                </button>
             ))}
 
-            <button className="btn bg-base-300 whitespace-nowrap mx-auto md:mx-0" onClick={handleFlagAdded}>
+            <button
+               className="btn bg-base-300 whitespace-nowrap mx-auto md:mx-0"
+               onClick={handleFlagAdded}
+            >
                <PlusIcon className="w-6" />
                Add flag
             </button>

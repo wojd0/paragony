@@ -1,5 +1,5 @@
-import { HomeIcon, UserIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
+import { HomeIcon, UserIcon } from '@heroicons/react/20/solid';
+import Link from 'next/link';
 
 export default function Navigation() {
    return (
