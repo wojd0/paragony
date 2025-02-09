@@ -9,7 +9,7 @@ const mockItems: Receipt = {
    ],
    metadata: [{ name: "Store", value: "Bideronka, ul. Wesoła 12, 12-345 Warszawa" }],
    total: 8.5,
-   flags: ['red', 'blue', 'green'],
+   flags: ["red", "blue", "green"],
 };
 
 export default function ScanResult({ file }: { file: File }) {

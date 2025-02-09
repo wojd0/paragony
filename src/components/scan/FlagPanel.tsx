@@ -28,28 +28,25 @@ export default function FlagPanel({
    items?: ReceiptItem[];
    onFlagsChange: (flags: string[]) => void;
 }) {
-   const calculatedFlags = useMemo(() => {
-      const calculatedSelectedFlags = items.reduce((acc, item) => {
-         item.selectedFlags.forEach((flag) => {
-            acc[flag] = (acc[flag] || 0) + item.totalPrice / item?.selectedFlags?.length || 1;
-         });
-         return acc;
-      }, {} as Record<string, number>);
-
-      flags.forEach((flag) => {
-         if (!calculatedSelectedFlags[flag]) {
-            calculatedSelectedFlags[flag] = 0;
-         }
-      });
-
+   const calculatedFlags = useMemo<Record<string, number>>(() => {
+      const calculatedSelectedFlags = Object.fromEntries([
+         ...flags.map((flag) => {
+            return [
+               flag,
+               items.reduce((acc, item) => {
+                  if (item.selectedFlags.includes(flag)) {
+                     acc += item.totalPrice / item.selectedFlags.length;
+                  }
+                  return acc;
+               }, 0),
+            ];
+         }),
+      ]);
       const unflaggedTotal =
          items.filter((item) => item.selectedFlags.length === 0).reduce((acc, item) => acc + item.totalPrice, 0) || 0;
 
-      return {
-         ["transparent"]: unflaggedTotal,
-         ...calculatedSelectedFlags,
-      };
-   }, [items]);
+      return {  transparent: unflaggedTotal, ...calculatedSelectedFlags };
+   }, [flags, items]);
 
    function handleFlagAdded() {
       onFlagChange([...flags, availableFlags.find((flag) => !flags.includes(flag)) || ""]);
@@ -89,7 +86,7 @@ export default function FlagPanel({
 
             <button className="btn bg-base-300 whitespace-nowrap mx-auto md:mx-0" onClick={handleFlagAdded}>
                <PlusIcon className="w-6" />
-               Add
+               Add flag
             </button>
          </div>
       </div>
