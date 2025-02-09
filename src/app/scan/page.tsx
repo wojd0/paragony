@@ -9,7 +9,11 @@ export default function Scan() {
 
   return (
     <div className="h-full bg-base-400">
-      {file ? <ScanResult file={file} /> : <ScanForm onFileUploaded={(file) => setFile(file)} />}
+      {file ? (
+        <ScanResult file={file} />
+      ) : (
+        <ScanForm onFileUploaded={(file) => setFile(file)} />
+      )}
     </div>
   );
 }
