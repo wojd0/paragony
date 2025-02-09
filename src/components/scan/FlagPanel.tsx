@@ -1,9 +1,33 @@
-import { TrashIcon } from "@heroicons/react/16/solid";
-import { FlagIcon } from "@heroicons/react/16/solid";
+import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
+import { FlagIcon as FlagIconSolid } from "@heroicons/react/24/solid";
+import { FlagIcon as FlagIconOutline } from "@heroicons/react/24/outline";
 import { ReceiptItem } from "./ResultPanel";
 import { useMemo } from "react";
 
-export default function FlagPanel({ flags = [], items = [] }: { flags?: string[]; items?: ReceiptItem[] }) {
+const availableFlags = [
+   "red",
+   "blue",
+   "green",
+   "yellow",
+   "purple",
+   "pink",
+   "indigo",
+   "cyan",
+   "teal",
+   "lime",
+   "amber",
+   "orange",
+];
+
+export default function FlagPanel({
+   flags = [],
+   items = [],
+   onFlagsChange: onFlagChange,
+}: {
+   flags?: string[];
+   items?: ReceiptItem[];
+   onFlagsChange: (flags: string[]) => void;
+}) {
    const calculatedFlags = useMemo(() => {
       const calculatedSelectedFlags = items.reduce((acc, item) => {
          item.selectedFlags.forEach((flag) => {
@@ -11,6 +35,12 @@ export default function FlagPanel({ flags = [], items = [] }: { flags?: string[]
          });
          return acc;
       }, {} as Record<string, number>);
+
+      flags.forEach((flag) => {
+         if (!calculatedSelectedFlags[flag]) {
+            calculatedSelectedFlags[flag] = 0;
+         }
+      });
 
       const unflaggedTotal =
          items.filter((item) => item.selectedFlags.length === 0).reduce((acc, item) => acc + item.totalPrice, 0) || 0;
@@ -21,26 +51,46 @@ export default function FlagPanel({ flags = [], items = [] }: { flags?: string[]
       };
    }, [items]);
 
-   return (
-      <div className="card bg-base-200 w-full h-24">
-         <div className="card-content p-3 h-full">
-            {Object.entries(calculatedFlags).map(([color, total]) => (
-               <button key={color} className="btn pr-12 btn-ghost h-full whitespace-nowrap relative group">
-                  <FlagIcon className={`w-6`} fill={color} />
+   function handleFlagAdded() {
+      onFlagChange([...flags, availableFlags.find((flag) => !flags.includes(flag)) || ""]);
+   }
 
-                  <span className="text-left">
+   function handleFlagRemoved(flag: string) {
+      onFlagChange(flags.filter((f) => f !== flag));
+   }
+
+   return (
+      <div className="card bg-base-200 w-full min-h-24">
+         <div className="card-content p-3 flex flex-wrap">
+            {Object.entries(calculatedFlags).map(([color, total]) => (
+               <button key={color} className="btn btn-ghost h-full whitespace-nowrap relative group basis-1/2 md:basis-1/5">
+                  {color === "transparent" ? (
+                     <FlagIconOutline className={`w-6`} />
+                  ) : (
+                     <FlagIconSolid className={`w-6`} fill={color} />
+                  )}
+
+                  <span className="text-right ml-auto mr-2">
                      <small>Total:</small>
                      <br />
-                     <span className="text-lg">{total} PLN</span>
+                     <span className="text-md">{total} PLN</span>
                   </span>
 
                   {color !== "transparent" && (
-                     <div className="opacity-0 group-hover:opacity-100 btn-circle h-6 w-6 p-1 absolute top-1 right-1 bg-red-600">
+                     <div
+                        className="sm:opacity-0 sm:group-hover:opacity-100 btn-circle h-5 w-5 p-1 absolute top-0 right-0 bg-red-600"
+                        onClick={() => handleFlagRemoved(color)}
+                     >
                         <TrashIcon />
                      </div>
                   )}
                </button>
             ))}
+
+            <button className="btn bg-base-300 whitespace-nowrap mx-auto md:mx-0" onClick={handleFlagAdded}>
+               <PlusIcon className="w-6" />
+               Add
+            </button>
          </div>
       </div>
    );

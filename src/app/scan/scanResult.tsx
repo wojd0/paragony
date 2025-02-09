@@ -16,11 +16,6 @@ export default function ScanResult({ file }: { file: File }) {
    const [imageUrl, setImageUrl] = useState<string | null>(null);
    const [receipt, setReceipt] = useState(mockItems);
 
-   function handleReceiptChange(items: ReceiptItem[]) {
-      console.log(items);
-      setReceipt({ ...receipt, items });
-   }
-
    useMemo(() => {
       const reader = new FileReader();
       reader.onload = () => {
@@ -30,9 +25,9 @@ export default function ScanResult({ file }: { file: File }) {
    }, [file]);
 
    return (
-      <div className="w-full flex flex-col md:flex-row gap-6 p-6">
+      <div className="w-full flex flex-col md:flex-row gap-6 p-4">
          {imageUrl && (
-            <img src={imageUrl} alt={file?.name} className="object-contain w-auto max-h-screen md:w-1/4 md:h-auto" />
+            <img src={imageUrl} alt={file?.name} className="object-contain w-auto max-h-screen md:w-1/4 md:h-fit" />
          )}
          <div className="flex-grow">
             <h2 className="text-4xl font-bold text-center">Scan result</h2>
@@ -42,7 +37,7 @@ export default function ScanResult({ file }: { file: File }) {
                   items={receipt.items}
                   metadata={receipt.metadata}
                   total={receipt.total}
-                  onReceiptChange={handleReceiptChange}
+                  onReceiptChange={setReceipt}
                />
             </div>
          </div>

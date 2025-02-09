@@ -19,16 +19,16 @@ export default function FlagSelector({
    }
 
    return (
-      <div className="overflow-visible flex gap-1">
+      <div className="overflow-visible flex flex-wrap gap-1 w-44 h-16 items-center">
          {flags.map((flag, index) => (
             <button
                key={index}
-               className="btn-square rounded-lg w-8 h-8 p-1 bg-base-200"
+               className="btn-square basis-7 md:basis-4 rounded-lg w-8 h-8 p-1 bg-base-200"
                onClick={() => handleFlagClick(flag)}>
                {selectedFlags.includes(flag) ? (
-                  <FlagIconSolid className="w-6" fill={flag} />
+                  <FlagIconSolid className="w-5" fill={flag} />
                ) : (
-                  <FlagIconOutline className="w-6" color={flag} />
+                  <FlagIconOutline className="w-5" color={flag} />
                )}
             </button>
          ))}
