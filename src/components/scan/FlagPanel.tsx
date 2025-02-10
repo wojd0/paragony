@@ -62,7 +62,7 @@ export default function FlagPanel({
    }
 
    return (
-      <div className="card bg-base-200 w-full min-h-24">
+      <div className="card bg-base-200 w-full min-h-16">
          <div className="card-content p-3 flex flex-wrap">
             {Object.entries(calculatedFlags).map(([color, total]) => (
                <button

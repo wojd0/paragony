@@ -19,7 +19,7 @@ export default function FlagSelector({
    }
 
    return (
-      <div className="overflow-visible flex flex-wrap gap-1 w-44 h-16 items-center">
+      <div className="overflow-visible flex flex-wrap gap-1 w-44 h-8 items-center">
          {flags.map((flag, index) => (
             <button
                key={index}
