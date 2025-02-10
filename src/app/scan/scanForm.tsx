@@ -13,10 +13,17 @@ export default function ScanForm({
       }
    }
 
+   function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+      event.preventDefault();
+      if (selectedFile) {
+         onFileUploaded(selectedFile);
+      }
+   }
+
    return (
       <form
          className="flex flex-col items-center justify-center h-full"
-         onSubmit={() => onFileUploaded(selectedFile)}
+         onSubmit={handleFormSubmit}
       >
          <div>
             <input type="file" accept="image/*" onChange={handleFileSelect} />
