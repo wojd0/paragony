@@ -1,7 +1,7 @@
 import { PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/24/solid';
 import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
-import { ReceiptItem } from './ResultPanel';
+import { ReceiptItem } from './ResultTable';
 import { useMemo } from 'react';
 
 const availableFlags = [

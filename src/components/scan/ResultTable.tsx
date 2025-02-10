@@ -17,7 +17,7 @@ export interface Receipt {
    flags: string[];
 }
 
-export default function ResultPanel({
+export default function ResultTable({
    items,
    metadata,
    total,

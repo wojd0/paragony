@@ -1,7 +1,7 @@
-import ResultPanel, {
+import ResultTable, {
    Receipt,
    ReceiptItem,
-} from '@/components/scan/ResultPanel';
+} from '@/components/scan/ResultTable';
 import { useMemo, useState } from 'react';
 
 const mockItems: Receipt = {
@@ -53,7 +53,7 @@ export default function ScanResult({ file }: { file: File }) {
          <div className="flex-grow">
             <h2 className="text-4xl font-bold text-center">Scan result</h2>
             <div className="w-full md:w-3/4 mx-auto mt-10">
-               <ResultPanel
+               <ResultTable
                   flags={receipt.flags}
                   items={receipt.items}
                   metadata={receipt.metadata}
