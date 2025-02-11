@@ -1,20 +1,24 @@
 import { Receipt } from "@/components/scan/ResultTable";
 import { ScanResponseSchema } from "./scan.generation-config";
 
+function roundPrice(price: number) {
+   return Math.round(price * 100) / 100;
+}
+
 export default function scanResponseParser(response: ScanResponseSchema): Receipt {
    return {
       items: response.items.map(item => ({
          amount: item.amount,
          name: item.name,
-         price: item.price,
-         totalPrice: item.totalPrice,
+         price: roundPrice(item.price),
+         totalPrice: roundPrice(item.totalPrice),
          selectedFlags: []
       })),
       metadata: Object.entries(response?.metadata || {}).map(([key, value]) => ({
          name: key,
          value: value,
       })),
-      total: response.total,
+      total: roundPrice(response.total),
       flags: [],
    }
 }

@@ -103,7 +103,7 @@ export default function ResultTable({
                      <td colSpan={2} />
                      <td className="text-right">Total</td>
                      <td className="text-right font-bold underline underline-offset-2">
-                        {total} PLN
+                        {total.toFixed(2)}&nbsp;PLN
                      </td>
                   </tr>
                </tbody>

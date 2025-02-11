@@ -67,7 +67,7 @@ export default function FlagPanel({
             {Object.entries(calculatedFlags).map(([color, total]) => (
                <button
                   key={color}
-                  className="btn btn-ghost h-full whitespace-nowrap relative group basis-1/2 md:basis-1/5"
+                  className="btn btn-ghost h-full flex flex-wr relative group basis-1/2 md:basis-1/5"
                >
                   {color === 'transparent' ? (
                      <FlagIconOutline className={`w-6`} />
@@ -78,7 +78,7 @@ export default function FlagPanel({
                   <span className="text-right ml-auto mr-2">
                      <small>Total:</small>
                      <br />
-                     <span className="text-md">{total} PLN</span>
+                     <span className="text-md">{total.toFixed(2)}&nbsp;PLN</span>
                   </span>
 
                   {color !== 'transparent' && (

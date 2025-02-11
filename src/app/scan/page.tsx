@@ -10,20 +10,27 @@ export default function Scan() {
    const [receipt, setReceipt] = useState<Receipt | null>(null);
    const [receiptImage, setReceiptImage] = useState<File | null>(null);
 
-   function handleReceiptChange(newReceipt: Receipt) {
-      setReceipt(newReceipt);
-   }
-
    async function handleFileUploaded(file: File) {
       setReceiptImage(file);
 
-      setReceipt(await scanImage(file));
+      const formData = new FormData();
+      formData.append('file', file);
+   
+      const result = await fetch('/api/scan', {
+         method: 'POST',
+         body: formData
+      });
+
+      const receipt = await result.json();
+      console.log(receipt);
+      
+      setReceipt(receipt);
    }
 
    return (
       <div className="h-full bg-base-400">
          {receiptImage && receipt ? (
-            <ScanResult receiptImage={receiptImage} receipt={receipt} onReceiptChange={handleReceiptChange} />
+            <ScanResult receiptImage={receiptImage} receipt={receipt} onReceiptChange={setReceipt} />
          ) : (
             <ScanForm onFileUploaded={(file) => handleFileUploaded(file)} />
          )}

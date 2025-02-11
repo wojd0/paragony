@@ -89,12 +89,11 @@ export default function ReceiptTableRows({
                         }
                      />
                   ) : (
-                     item.price
+                     item.price.toFixed(2) + ' PLN'
                   )}
                </td>
                <td className="text-right">
-                  {item.totalPrice || item.price * item.amount}
-                  &nbsp;PLN
+                  {(item.totalPrice || item.price * item.amount).toFixed(2)}&nbsp;PLN
                </td>
             </tr>
          ))}
