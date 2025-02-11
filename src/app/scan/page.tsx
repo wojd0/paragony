@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import ScanForm from './ScanForm';
 import ScanResult from './ScanResult';
-import { scanImage } from '@/api/GeminiScanner';
+import { scanImage } from '@/gemini/scan/scan.api';
 import { Receipt } from '@/components/scan/ResultTable';
 
 export default function Scan() {
