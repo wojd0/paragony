@@ -4,7 +4,7 @@ import FlagPanel from '../../../components/scan/FlagPanel';
 import { ReceiptItem } from '../../../components/scan/ResultTable';
 
 const meta = {
-   title: 'Example/FlagPanel',
+   title: 'Scanner/Results/FlagPanel',
    component: FlagPanel,
    parameters: {
       layout: 'centered',
