@@ -2,7 +2,8 @@ import { PlusIcon, TrashIcon } from '@heroicons/react/16/solid';
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/24/solid';
 import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
 import { ReceiptItem } from './ResultTable';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import ClipboardToast from '../shared/ClipboardToast';
 
 const availableFlags = [
    'red',
@@ -101,11 +102,22 @@ export default function FlagPanel({
 }
 
 function FlagPanelTotal({ total }: { total: number }) {
+   const [showToast, setShowToast] = useState(false);
+
+   function handleClick() {
+      navigator.clipboard.writeText(total.toFixed(2));
+      setShowToast(true);
+      setTimeout(() => setShowToast(false), 3000);
+   }
+
    return (
-      <span className="text-right ml-auto mr-2">
-      <small>Total:</small>
-      <br />
-      <span className="text-md">{total.toFixed(2)}&nbsp;PLN</span>
-   </span>
-   )
+      <>
+         <ClipboardToast visible={showToast} />
+         <span className="text-right ml-auto mr-2 z-10" onClick={handleClick}>
+            <small>Total:</small>
+            <br />
+            <span className="text-md">{total.toFixed(2)}&nbsp;PLN</span>
+         </span>
+      </>
+   );
 }
