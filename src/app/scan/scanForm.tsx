@@ -25,15 +25,14 @@ export default function ScanForm({
          className="flex flex-col items-center justify-center h-full"
          onSubmit={handleFormSubmit}
       >
-         <div>
+         <div className="p-10">
             <input
                type="file"
                accept="image/*"
                onChange={handleFileSelect}
                className="file-input file-input-bordered file-input-primary w-full max-w-xs"
             />
-            <br />
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" disabled={!selectedFile} className="btn btn-primary ml-6">
                Scan
             </button>
          </div>
