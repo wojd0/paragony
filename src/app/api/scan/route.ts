@@ -1,4 +1,4 @@
-import { scanImage } from "../../../gemini/scan/scan.api";
+import { scanImage } from '../../../gemini/scan/scan.api';
 
 export async function GET(request: Request): Promise<Response> {
    return new Response('Hello!');
@@ -17,6 +17,5 @@ export async function POST(request: Request): Promise<Response> {
       return new Response('No file provided', { status: 400 });
    }
 
-   
-   return new Response(JSON.stringify((await scanImage(file))));
+   return new Response(JSON.stringify(await scanImage(file)));
 }

@@ -24,15 +24,16 @@ export default function ReceiptTableRows({
    function handleInputChange(
       index: number,
       field: keyof ReceiptItem,
-      value: string | number
+      value: string | number,
    ) {
       const newItems = [...items];
       newItems[index] = {
          ...newItems[index],
          [field]: value,
-         totalPrice: field === 'amount' || field === 'price'
-            ? newItems[index].price * newItems[index].amount
-            : newItems[index].totalPrice,
+         totalPrice:
+            field === 'amount' || field === 'pricePerUnit'
+               ? newItems[index].pricePerUnit * newItems[index].amount
+               : newItems[index].totalPrice,
       };
       onItemChange(index, newItems[index]);
    }
@@ -71,7 +72,11 @@ export default function ReceiptTableRows({
                         className="input input-bordered w-full text-right min-w-20"
                         value={item.amount}
                         onChange={(e) =>
-                           handleInputChange(index, 'amount', parseFloat(e.target.value))
+                           handleInputChange(
+                              index,
+                              'amount',
+                              parseFloat(e.target.value),
+                           )
                         }
                      />
                   ) : (
@@ -83,17 +88,24 @@ export default function ReceiptTableRows({
                      <input
                         type="number"
                         className="input input-bordered w-full text-right min-w-20"
-                        value={item.price}
+                        value={item.pricePerUnit}
                         onChange={(e) =>
-                           handleInputChange(index, 'price', parseFloat(e.target.value))
+                           handleInputChange(
+                              index,
+                              'pricePerUnit',
+                              parseFloat(e.target.value),
+                           )
                         }
                      />
                   ) : (
-                     item.price.toFixed(2) + ' PLN'
+                     item.pricePerUnit.toFixed(2) + ' PLN'
                   )}
                </td>
                <td className="text-right">
-                  {(item.totalPrice || item.price * item.amount).toFixed(2)}&nbsp;PLN
+                  {(item.totalPrice || item.pricePerUnit * item.amount).toFixed(
+                     2,
+                  )}
+                  &nbsp;PLN
                </td>
             </tr>
          ))}

@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-import AdditionalMetadata, { ReceiptMetdata } from './AdditionalMetdata';
+import AdditionalMetadata, { ReceiptMetadata } from './AdditionalMetadata';
 import FlagPanel from './FlagPanel';
-import FlagSelector from './FlagSelector';
 import ReceiptTableRows from './ReceiptTableRows';
 
 export interface ReceiptItem {
    name: string;
    amount: number;
-   price: number;
+   pricePerUnit: number;
+   reductionPerUnit: number;
    totalPrice: number;
    selectedFlags: string[];
 }
 
 export interface Receipt {
    items: ReceiptItem[];
-   metadata: ReceiptMetdata[];
+   metadata: ReceiptMetadata[];
    total: number;
    flags: string[];
 }
@@ -32,7 +32,7 @@ export default function ResultTable({
       const newItems = [...items];
       newItems[index] = {
          ...changedItem,
-         totalPrice: changedItem.price * changedItem.amount,
+         totalPrice: changedItem.pricePerUnit * changedItem.amount,
       };
       const newTotal = newItems.reduce((sum, item) => sum + item.totalPrice, 0);
       onReceiptChange({ items: newItems, metadata, total: newTotal, flags });
@@ -42,7 +42,7 @@ export default function ResultTable({
       const newItems = items.map((item) => ({
          ...item,
          selectedFlags: item.selectedFlags.filter((flag) =>
-            enabledFlags.includes(flag)
+            enabledFlags.includes(flag),
          ),
       }));
 
@@ -81,6 +81,7 @@ export default function ResultTable({
                   <col className="w-1/12" />
                   <col className="w-1/12" />
                   <col className="w-1/12" />
+                  <col className="w-1/12" />
                </colgroup>
                <thead>
                   <tr>
@@ -88,6 +89,7 @@ export default function ResultTable({
                      <th>Name</th>
                      <th className="text-right">Amount</th>
                      <th className="text-right">Price per unit</th>
+                     <th className="text-right">Reduction per unit</th>
                      <th className="text-right">Total price</th>
                   </tr>
                </thead>
@@ -100,7 +102,7 @@ export default function ResultTable({
                   />
                   <tr className="border-t-2">
                      <td />
-                     <td colSpan={2} />
+                     <td colSpan={3} />
                      <td className="text-right">Total</td>
                      <td className="text-right font-bold underline underline-offset-2">
                         {total.toFixed(2)}&nbsp;PLN

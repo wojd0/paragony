@@ -1,10 +1,16 @@
-import ResultTable, {
-   Receipt,
-   ReceiptItem,
-} from '@/components/scan/ResultTable';
+import ResultTable, { Receipt } from '@/components/scan/ResultTable';
+import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
-export default function ScanResult({ receiptImage, receipt, onReceiptChange }: { receiptImage: File, receipt: Receipt, onReceiptChange: (receipt: Receipt) => void }) {
+export default function ScanResult({
+   receiptImage,
+   receipt,
+   onReceiptChange,
+}: {
+   receiptImage: File;
+   receipt: Receipt;
+   onReceiptChange: (receipt: Receipt) => void;
+}) {
    const [imageUrl, setImageUrl] = useState<string | null>(null);
 
    useMemo(() => {
@@ -18,15 +24,15 @@ export default function ScanResult({ receiptImage, receipt, onReceiptChange }: {
    return (
       <div className="w-full flex flex-col md:flex-row gap-6 p-4">
          {imageUrl && (
-            <img
+            <Image
                src={imageUrl}
                alt={receiptImage?.name}
-               className="object-contain w-auto max-h-screen md:w-1/4 md:h-fit"
+               className="object-contain max-h-screen md:h-fit"
             />
          )}
          <div className="flex-grow">
             <h2 className="text-4xl font-bold text-center">Scan result</h2>
-            <div className="w-full md:w-3/4 mx-auto mt-10">
+            <div className="w-full mx-auto mt-10">
                <ResultTable
                   flags={receipt.flags}
                   items={receipt.items}

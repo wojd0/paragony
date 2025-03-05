@@ -3,7 +3,6 @@ import path from 'node:path';
 import { existsSync } from 'node:fs';
 import { mkdir, unlink, writeFile } from 'node:fs/promises';
 import { ScanChatbot } from './scan.chatbot';
-import { setTimeout } from 'node:timers';
 import scanResponseParser from './scan.response-parser';
 
 const mockItems: Receipt = {
@@ -50,26 +49,24 @@ export async function scanImage(file: File): Promise<Receipt> {
    return scanResponseParser(result);
 }
 
-async function saveImageLocally(file: File): Promise<{ path: string; delete: () => Promise<void>; }> {
+async function saveImageLocally(
+   file: File,
+): Promise<{ path: string; delete: () => Promise<void> }> {
    const destinationDir = path.join(process.cwd(), 'public', 'uploads');
    const destinationPath = path.join(destinationDir, file.name);
 
    const fileArrayBuffer = await file.arrayBuffer();
-   
-   if(!existsSync(destinationPath)) {
+
+   if (!existsSync(destinationPath)) {
       await mkdir(destinationDir, { recursive: true });
    }
 
-   await writeFile(
-      destinationPath,
-      Buffer.from(fileArrayBuffer),
-   );
-
+   await writeFile(destinationPath, Buffer.from(fileArrayBuffer));
 
    return {
       path: destinationPath,
       delete: () => {
          return unlink(destinationPath);
-      }
-   }
+      },
+   };
 }

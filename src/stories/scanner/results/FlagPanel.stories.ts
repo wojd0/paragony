@@ -20,19 +20,25 @@ type Story = StoryObj<typeof meta>;
 
 const sampleItems: ReceiptItem[] = [
    {
-      name: 'Item 1', totalPrice: 10, selectedFlags: ['red'],
+      name: 'Item 1',
+      totalPrice: 10,
+      selectedFlags: ['red'],
       amount: 0,
-      price: 0
+      price: 0,
    },
    {
-      name: 'Item 2', totalPrice: 20, selectedFlags: [],
+      name: 'Item 2',
+      totalPrice: 20,
+      selectedFlags: [],
       amount: 0,
-      price: 0
+      price: 0,
    },
    {
-      name: 'Item 3', totalPrice: 30, selectedFlags: ['blue', 'green'],
+      name: 'Item 3',
+      totalPrice: 30,
+      selectedFlags: ['blue', 'green'],
       amount: 0,
-      price: 0
+      price: 0,
    },
 ];
 

@@ -1,13 +1,12 @@
-import {
-   GoogleGenerativeAI,
-   GenerationConfig,
-   SchemaType,
-} from '@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import {
    FileMetadataResponse,
    GoogleAIFileManager,
 } from '@google/generative-ai/server';
-import { SCAN_GENERATION_CONFIG, ScanResponseSchema } from './scan.generation-config';
+import {
+   SCAN_GENERATION_CONFIG,
+   ScanResponseSchema,
+} from './scan.generation-config';
 
 const apiKey = process.env.GEMINI_API_KEY || '';
 
@@ -21,7 +20,10 @@ export class ScanChatbot {
       this.setupChat();
    }
 
-   async requestScan(filePath: string, mimeType: string): Promise<ScanResponseSchema> {
+   async requestScan(
+      filePath: string,
+      mimeType: string,
+   ): Promise<ScanResponseSchema> {
       const file = await this.uploadFile(filePath, mimeType);
 
       const chatSession = await this.setupChat();

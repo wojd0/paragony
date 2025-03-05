@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function ScanForm({
    onFileUploaded,
 }: {
-   onFileUploaded: (resultFile: any) => void;
+   onFileUploaded: (resultFile: File) => void;
 }) {
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -26,7 +26,13 @@ export default function ScanForm({
          onSubmit={handleFormSubmit}
       >
          <div>
-            <input type="file" accept="image/*" onChange={handleFileSelect} />
+            <input
+               type="file"
+               accept="image/*"
+               onChange={handleFileSelect}
+               className="file-input file-input-bordered file-input-primary w-full max-w-xs"
+            />
+            <br />
             <button type="submit" className="btn btn-primary">
                Scan
             </button>

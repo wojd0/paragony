@@ -1,9 +1,14 @@
-import { GenerationConfig, ResponseSchema, SchemaType } from '@google/generative-ai';
+import {
+   GenerationConfig,
+   ResponseSchema,
+   SchemaType,
+} from '@google/generative-ai';
 
 export interface ScanResponseSchema {
    items: {
       name: string;
-      price: number;
+      pricePerUnit: number;
+      reductionPerUnit: number;
       amount: number;
       totalPrice: number;
    }[];
@@ -25,7 +30,10 @@ const RESPONSE_SCHEMA: ResponseSchema = {
                name: {
                   type: SchemaType.STRING,
                },
-               price: {
+               pricePerUnit: {
+                  type: SchemaType.NUMBER,
+               },
+               reductionPerUnit: {
                   type: SchemaType.NUMBER,
                },
                amount: {
@@ -35,11 +43,17 @@ const RESPONSE_SCHEMA: ResponseSchema = {
                   type: SchemaType.NUMBER,
                },
             },
-            required: ['name', 'price', 'amount', 'totalPrice'],
+            required: [
+               'name',
+               'pricePerUnit',
+               'reductionPerUnit',
+               'amount',
+               'totalPrice',
+            ],
          },
       },
       total: {
-         type: SchemaType.NUMBER
+         type: SchemaType.NUMBER,
       },
       metadata: {
          type: SchemaType.OBJECT,
@@ -65,5 +79,5 @@ export const SCAN_GENERATION_CONFIG: GenerationConfig = {
    topK: 40,
    maxOutputTokens: 8192,
    responseMimeType: 'application/json',
-   responseSchema: RESPONSE_SCHEMA
+   responseSchema: RESPONSE_SCHEMA,
 };
