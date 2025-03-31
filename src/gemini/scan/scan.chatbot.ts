@@ -1,12 +1,6 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import {
-   FileMetadataResponse,
-   GoogleAIFileManager,
-} from '@google/generative-ai/server';
-import {
-   SCAN_GENERATION_CONFIG,
-   ScanResponseSchema,
-} from './scan.generation-config';
+import { FileMetadataResponse, GoogleAIFileManager } from '@google/generative-ai/server';
+import { SCAN_GENERATION_CONFIG, ScanResponseSchema } from './scan.generation-config';
 
 const apiKey = process.env.GEMINI_API_KEY || '';
 
@@ -41,9 +35,7 @@ export class ScanChatbot {
 
       await this.deleteFile(file);
 
-      const parsedResult = JSON.parse(result.response.text());
-
-      return parsedResult;
+      return JSON.parse(result.response.text());
    }
 
    private async uploadFile(path: string, mimeType: string) {
@@ -62,7 +54,7 @@ export class ScanChatbot {
 
    private async setupChat() {
       const model = this.genAI.getGenerativeModel({
-         model: 'gemini-2.0-flash-exp',
+         model: 'gemini-2.5-pro-exp-03-25',
          systemInstruction:
             'Z załączonego zdjęcia paragonu fiskalnego z polskiego sklepu, restauracji lub innej usługi wyczytaj dane w postaci zadanej struktury. Czytaj paragon linijka po linijce i dokładnie wyciągaj z niego wymagane dane. Jeśli któraś z niewymaganych danych jest trudna do uzyskania, po prostu pomiń ją w wyniku.',
       });
