@@ -1,5 +1,4 @@
 import ResultTable, { Receipt } from '@/components/scan/ResultTable';
-import Image from 'next/image';
 import { useMemo, useState } from 'react';
 
 export default function ScanResult({
@@ -24,10 +23,10 @@ export default function ScanResult({
    return (
       <div className="w-full flex flex-col md:flex-row gap-6 p-4">
          {imageUrl && (
-            <Image
+            <img
                src={imageUrl}
                alt={receiptImage?.name}
-               className="object-contain max-h-screen md:h-fit"
+               className="object-contain max-h-screen w-1/2 md:h-fit"
             />
          )}
          <div className="flex-grow">

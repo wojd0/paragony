@@ -1,8 +1,4 @@
-import {
-   GenerationConfig,
-   ResponseSchema,
-   SchemaType,
-} from '@google/generative-ai';
+import { GenerationConfig, ResponseSchema, SchemaType } from '@google/generative-ai';
 
 export interface ScanResponseSchema {
    items: {
@@ -16,9 +12,13 @@ export interface ScanResponseSchema {
    metadata?: {
       nameAddress?: string;
       dateUtc?: string;
+      currency?: string;
    };
 }
 
+/**
+ * Typed schema of the structured AI response
+ */
 const RESPONSE_SCHEMA: ResponseSchema = {
    type: SchemaType.OBJECT,
    properties: {
@@ -55,6 +55,9 @@ const RESPONSE_SCHEMA: ResponseSchema = {
       total: {
          type: SchemaType.NUMBER,
       },
+      currency: {
+         type: SchemaType.NUMBER,
+      },
       metadata: {
          type: SchemaType.OBJECT,
          properties: {
@@ -64,6 +67,9 @@ const RESPONSE_SCHEMA: ResponseSchema = {
             dateUtc: {
                type: SchemaType.STRING,
             },
+            currency: {
+               type: SchemaType.NUMBER
+            }
          },
       },
    },
