@@ -1,14 +1,22 @@
 import { FileMetadataResponse, GoogleAIFileManager } from '@google/generative-ai/server';
 import { SCAN_GENERATION_CONFIG, ScanResponseSchema } from './scan.generation-config';
-import { BaseChatBot } from '@/gemini/base/base.chatbot';
 import { SCAN } from './scan.prompts.json';
+import { GenerationConfig, GoogleGenerativeAI } from '@google/generative-ai';
+import { getGeminiEnv } from '@/gemini/environmentConfiguration';
 
-export class ScanChatbot extends BaseChatBot {
-   private fileManager: GoogleAIFileManager;
+export class ScanChatbot {
+   private chatbotApiKey: string = getGeminiEnv('GEMINI_CHATBOT_API_KEY');
+   private chatbotModelId: string = getGeminiEnv('GEMINI_CHATBOT_MODEL');
 
-   constructor() {
-      super();
-      this.fileManager = new GoogleAIFileManager(this.chatbotApiKey);
+   private genAI: GoogleGenerativeAI = new GoogleGenerativeAI(this.chatbotApiKey);
+   private fileManager: GoogleAIFileManager = new GoogleAIFileManager(this.chatbotApiKey);
+
+   async setupChat(systemInstruction: string, generationConfig: GenerationConfig) {
+      const model = this.genAI.getGenerativeModel({
+         model: this.chatbotModelId,
+         systemInstruction
+      });
+      return model.startChat({ generationConfig });
    }
 
    async requestScan(
