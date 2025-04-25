@@ -1,4 +1,4 @@
-import { Receipt } from '@/components/scan/ResultTable';
+import { Receipt } from '@/components/scan/result-table/ResultTable';
 import { ScanResponseSchema } from './gemini/scan.generation-config';
 
 function roundPrice(price: number) {

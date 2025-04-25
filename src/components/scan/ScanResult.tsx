@@ -1,4 +1,4 @@
-import ResultTable, { Receipt } from '@/components/scan/ResultTable';
+import ResultTable, { Receipt } from '@/components/scan/result-table/ResultTable';
 import { useMemo, useState } from 'react';
 
 export default function ScanResult({

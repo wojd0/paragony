@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AdditionalMetadata, { ReceiptMetadata } from './AdditionalMetadata';
-import FlagPanel from './FlagPanel';
-import ReceiptTableRows from './ReceiptTableRows';
+import AdditionalMetadata, { ReceiptMetadata } from '../AdditionalMetadata';
+import TotalFlagPanel from './flag-panel/TotalFlagPanel';
+import ReceiptTableRows from './row/ReceiptTableRows';
 
 export interface ReceiptItem {
    name: string;
@@ -99,6 +99,10 @@ export default function ResultTable({
                      flags={flags}
                      onItemChange={handleItemChange}
                      editMode={editMode}
+                     currency={
+                        metadata.find((m) => m.name === 'currency')?.value ||
+                        'PLN'
+                     }
                   />
                   <tr className="border-t-2">
                      <td />
@@ -113,7 +117,7 @@ export default function ResultTable({
          </div>
          <AdditionalMetadata metadata={metadata} />
          <div className="h-6"></div>
-         <FlagPanel
+         <TotalFlagPanel
             flags={flags}
             items={items}
             onFlagsChange={handleEnabledFlagsChange}

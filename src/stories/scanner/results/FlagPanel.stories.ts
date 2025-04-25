@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import FlagPanel from '../../../components/scan/FlagPanel';
-import { ReceiptItem } from '@/components/scan/ResultTable';
+import TotalFlagPanel from '../../../components/scan/result-table/flag-panel/TotalFlagPanel';
+import { ReceiptItem } from '@/components/scan/result-table/ResultTable';
 
 const meta = {
-   title: 'Scanner/Results/FlagPanel',
-   component: FlagPanel,
+   title: 'Scanner/Results/TotalFlagPanel',
+   component: TotalFlagPanel,
    parameters: {
       layout: 'centered',
    },
@@ -13,7 +13,7 @@ const meta = {
    args: {
       onFlagsChange: fn(),
    },
-} satisfies Meta<typeof FlagPanel>;
+} satisfies Meta<typeof TotalFlagPanel>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;

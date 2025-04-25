@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Receipt } from '@/components/scan/ResultTable';
-import ScanResult from '@/app/scan/scanResult';
-import ScanForm from '@/app/scan/scanForm';
+import { Receipt } from '@/components/scan/result-table/ResultTable';
+import ScanResult from '@/components/scan/ScanResult';
+import ScanForm from '@/components/scan/ScanForm';
 
 export default function Scan() {
    const [receipt, setReceipt] = useState<Receipt | null>(null);
