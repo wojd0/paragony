@@ -2,6 +2,7 @@ import React from 'react';
 import FlagSelector from './FlagSelector';
 import { ReceiptItem } from '../ResultTable';
 import EditModeCells from '@/components/scan/result-table/row/EditModeCells';
+import FlagCell from '@/components/scan/result-table/row/cells/FlagCell';
 
 interface ReceiptTableRowsProps {
    items: ReceiptItem[];
@@ -44,15 +45,13 @@ export default function ReceiptTableRows({
       <>
          {items.map((item, index) => (
             <tr key={index}>
-               <td className="text-center">
-                  <FlagSelector
-                     flags={flags}
-                     selectedFlags={item.selectedFlags}
-                     onFlagsChanged={(changedFlags) =>
-                        handleFlagsSelection(index, changedFlags)
-                     }
-                  />
-               </td>
+               <FlagCell
+                  flags={flags}
+                  selectedFlags={item.selectedFlags}
+                  handleFlagsSelection={(changedFlags) =>
+                     handleFlagsSelection(index, changedFlags)
+                  }
+               />
 
                {editMode ? (
                   <EditModeCells
@@ -63,8 +62,8 @@ export default function ReceiptTableRows({
                   />
                ) : (
                   <>
-                     <td>item.name</td>
-                     <td className="text-right">item.amount</td>
+                     <td>{item.name}</td>
+                     <td className="text-right">{item.amount}</td>
                      <td className="text-right">
                         {item.pricePerUnit.toFixed(2)} {}
                      </td>

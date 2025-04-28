@@ -1,7 +1,4 @@
-export interface ReceiptMetadata {
-   name: string;
-   value: string;
-}
+export type ReceiptMetadata = Record<string, string>;
 
 export default function AdditionalMetadata({
    metadata = [],

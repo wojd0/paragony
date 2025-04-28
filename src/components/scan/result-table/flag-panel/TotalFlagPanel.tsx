@@ -3,21 +3,6 @@ import { ReceiptItem } from '../ResultTable';
 import { useMemo } from 'react';
 import TotalFlag from '@/components/scan/result-table/flag-panel/TotalFlag';
 
-const availableFlags = [
-   'red',
-   'blue',
-   'green',
-   'yellow',
-   'purple',
-   'pink',
-   'indigo',
-   'cyan',
-   'teal',
-   'lime',
-   'amber',
-   'orange',
-];
-
 export default function TotalFlagPanel({
    flags = [],
    items = [],
@@ -56,7 +41,7 @@ export default function TotalFlagPanel({
    function handleFlagAdded() {
       onFlagChange([
          ...flags,
-         availableFlags.find((flag) => !flags.includes(flag)) || '',
+         AVAILABLE_FLAGS.find((flag) => !flags.includes(flag)) || '',
       ]);
    }
 

@@ -24,21 +24,24 @@ const sampleItems: ReceiptItem[] = [
       totalPrice: 10,
       selectedFlags: ['red'],
       amount: 0,
-      price: 0,
+      pricePerUnit: 0,
+      reductionPerUnit: 0,
    },
    {
       name: 'Item 2',
       totalPrice: 20,
       selectedFlags: [],
       amount: 0,
-      price: 0,
+      pricePerUnit: 0,
+      reductionPerUnit: 0,
    },
    {
       name: 'Item 3',
       totalPrice: 30,
       selectedFlags: ['blue', 'green'],
       amount: 0,
-      price: 0,
+      pricePerUnit: 0,
+      reductionPerUnit: 0,
    },
 ];
 

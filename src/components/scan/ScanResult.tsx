@@ -1,5 +1,8 @@
-import ResultTable, { Receipt } from '@/components/scan/result-table/ResultTable';
+import ResultTable, {
+   Receipt,
+} from '@/components/scan/result-table/ResultTable';
 import { useMemo, useState } from 'react';
+import ResultList from './result-list/ResultList';
 
 export default function ScanResult({
    receiptImage,
@@ -21,18 +24,18 @@ export default function ScanResult({
    }, [receiptImage]);
 
    return (
-      <div className="w-full flex flex-col md:flex-row gap-6 p-4">
+      <div className='w-full flex flex-col md:flex-row gap-6 p-4'>
          {imageUrl && (
             <img
                src={imageUrl}
                alt={receiptImage?.name}
-               className="object-contain max-h-screen w-1/2 md:h-fit"
+               className='object-contain max-h-screen w-1/2 md:h-fit'
             />
          )}
-         <div className="flex-grow">
-            <h2 className="text-4xl font-bold text-center">Scan result</h2>
-            <div className="w-full mx-auto mt-10">
-               <ResultTable
+         <div className='flex-grow'>
+            <h2 className='text-4xl font-bold text-center'>Scan result</h2>
+            <div className='w-full mx-auto mt-10'>
+               <ResultList
                   flags={receipt.flags}
                   items={receipt.items}
                   metadata={receipt.metadata}
