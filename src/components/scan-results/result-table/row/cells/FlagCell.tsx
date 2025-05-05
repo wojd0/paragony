@@ -1,4 +1,4 @@
-import FlagSelector from '@/components/scan/result-table/row/FlagSelector';
+import FlagSelector from '@/components/scan-results/result-table/row/FlagSelector';
 import React from 'react';
 
 export interface FlagCellProps {

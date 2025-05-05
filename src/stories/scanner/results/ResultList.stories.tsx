@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import ResultList from '@/components/scan/result-list/ResultList';
+import ResultList from '@/components/scan-results/result-list/ResultList';
 
 const meta = {
    title: 'Scanner/Results/ResultList',

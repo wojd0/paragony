@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import FlagPicker from '@/components/scan/result-list/flag-picker/FlagPicker';
+import FlagPicker from '@/components/scan-results/result-list/flag-picker/FlagPicker';
 
 const meta = {
    title: 'Scanner/Results/FlagPicker',

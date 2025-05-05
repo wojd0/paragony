@@ -1,5 +1,5 @@
 import React from 'react';
-import { ReceiptItem } from '@/components/scan/result-table/ResultTable';
+import { ReceiptItem } from '@/components/scan-results/result-table/ResultTable';
 
 export interface EditModeCellsProps {
    item: ReceiptItem;

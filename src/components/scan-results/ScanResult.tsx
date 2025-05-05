@@ -1,6 +1,6 @@
 import ResultTable, {
    Receipt,
-} from '@/components/scan/result-table/ResultTable';
+} from '@/components/scan-results/result-table/ResultTable';
 import { useMemo, useState } from 'react';
 import ResultList from './result-list/ResultList';
 

@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import TotalFlagPanel from '../../../components/scan/result-table/flag-panel/TotalFlagPanel';
-import { ReceiptItem } from '@/components/scan/result-table/ResultTable';
+import TotalFlagPanel from '@/components/scan-results/result-table/flag-panel/TotalFlagPanel';
+import { ReceiptItem } from '@/components/scan-results/result-table/ResultTable';
 
 const meta = {
    title: 'Scanner/Results/TotalFlagPanel',

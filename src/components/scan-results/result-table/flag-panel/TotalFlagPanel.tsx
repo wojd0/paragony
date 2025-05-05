@@ -1,7 +1,7 @@
 import { PlusIcon } from '@heroicons/react/16/solid';
 import { ReceiptItem } from '../ResultTable';
 import { useMemo } from 'react';
-import TotalFlag from '@/components/scan/result-table/flag-panel/TotalFlag';
+import TotalFlag from '@/components/scan-results/result-table/flag-panel/TotalFlag';
 
 export default function TotalFlagPanel({
    flags = [],

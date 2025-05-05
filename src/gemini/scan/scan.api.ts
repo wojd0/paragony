@@ -1,4 +1,4 @@
-import { Receipt } from '@/components/scan/result-table/ResultTable';
+import { Receipt } from '@/components/scan-results/result-table/ResultTable';
 import { ScanChatbot } from './gemini/scan.chatbot';
 import scanResponseParser from './scan.response-parser';
 import path from 'node:path';

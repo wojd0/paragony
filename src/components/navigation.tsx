@@ -16,7 +16,7 @@ export default function Navigation() {
             >
                My Receipts
             </Link>
-            <Link href="scan" className="btn btn-ghost normal-case text-xl">
+            <Link href="scan-results" className="btn btn-ghost normal-case text-xl">
                Scan tmpstuff
             </Link>
          </div>

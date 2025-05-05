@@ -1,4 +1,4 @@
-import { ReceiptMetadata } from '@/components/scan/AdditionalMetadata';
+import { ReceiptMetadata } from '@/components/scan-results/AdditionalMetadata';
 import { useState } from 'react';
 import FlagPicker from './flag-picker/FlagPicker';
 
