@@ -15,7 +15,7 @@ export default function RootLayout({
    children: React.ReactNode;
 }>) {
    return (
-      <html lang="en" suppressHydrationWarning data-theme="cupcake">
+      <html lang="en" suppressHydrationWarning data-theme="business">
          <body>
             <div className="flex flex-col min-h-screen">
                <Navigation />
