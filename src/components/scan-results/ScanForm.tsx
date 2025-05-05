@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
    ArrowsRightLeftIcon,
    ArrowUpTrayIcon,
+   XMarkIcon,
 } from '@heroicons/react/16/solid';
 
 export default function ScanForm({
@@ -12,9 +13,13 @@ export default function ScanForm({
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
    function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
-      if (event.target.files) {
+      if (event.target.files && event.target.files.length > 0) {
          setSelectedFile(event.target.files[0]);
       }
+   }
+
+   function handleFileClear() {
+      setSelectedFile(null);
    }
 
    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -29,25 +34,34 @@ export default function ScanForm({
          className='flex flex-col items-center gap-3 p-10'
          onSubmit={handleFormSubmit}
       >
-         <label htmlFor='scanFileUpload' className='flex items-center gap-3'>
-            {selectedFile ? (
-               <div className='flex items-center bg-neutral gap-2 ps-2 rounded-s'>
+         {selectedFile ? (
+            <div className='flex items-center bg-neutral ps-3 rounded-s'>
+               <label htmlFor='scanFileUpload' className='contents'>
                   <span>{selectedFile?.name}</span>
                   <br />
-                  <span className='btn btn-secondary rounded-l-none'>
+                  <span className='btn btn-secondary rounded-none px-2 ms-3'>
                      <ArrowsRightLeftIcon className='w-6 h-6' />
                   </span>
-               </div>
-            ) : (
-               <div className='flex items-center bg-neutral ps-3 gap-2 rounded-s scale-125 transition-transform'>
-                  <span>Select a file to scan</span>
-                  <br />
-                  <span className='btn btn-accent rounded-l-none'>
-                     <ArrowUpTrayIcon className='w-6 h-6' />
-                  </span>
-               </div>
-            )}
-         </label>
+               </label>
+               <button
+                  onClick={handleFileClear}
+                  className='btn btn-error rounded-l-none px-2'
+               >
+                  <XMarkIcon className='w-6 h-6' />
+               </button>
+            </div>
+         ) : (
+            <label
+               htmlFor='scanFileUpload'
+               className='flex items-center bg-neutral ps-3 rounded-s scale-125 transition-transform'
+            >
+               <span>Select a file to scan</span>
+               <br />
+               <span className='btn btn-accent rounded-l-none ms-3'>
+                  <ArrowUpTrayIcon className='w-6 h-6' />
+               </span>
+            </label>
+         )}
          <input
             type='file'
             name='scanFileUpload'
