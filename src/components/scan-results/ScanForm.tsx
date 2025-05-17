@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
    ArrowsRightLeftIcon,
    ArrowUpTrayIcon,
@@ -11,6 +11,7 @@ export default function ScanForm({
    onFileUploaded: (resultFile: File) => void;
 }) {
    const [selectedFile, setSelectedFile] = useState<File | null>(null);
+   const fileSelectorRef = useRef<HTMLInputElement>(null);
 
    function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
       if (event.target.files && event.target.files.length > 0) {
@@ -20,6 +21,9 @@ export default function ScanForm({
 
    function handleFileClear() {
       setSelectedFile(null);
+      if (fileSelectorRef.current) {
+         fileSelectorRef.current.value = '';
+      }
    }
 
    function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -31,7 +35,7 @@ export default function ScanForm({
 
    return (
       <form
-         className='flex flex-col items-center gap-3 p-10'
+         className='flex flex-col items-center justify-center gap-3 py-10'
          onSubmit={handleFormSubmit}
       >
          {selectedFile ? (
@@ -53,7 +57,7 @@ export default function ScanForm({
          ) : (
             <label
                htmlFor='scanFileUpload'
-               className='flex items-center bg-neutral ps-3 rounded-s scale-125 transition-transform'
+               className='flex items-center bg-neutral ps-3 rounded-s scale-125 transition-transform ease-out'
             >
                <span>Select a file to scan</span>
                <br />
@@ -67,13 +71,14 @@ export default function ScanForm({
             name='scanFileUpload'
             id='scanFileUpload'
             accept='image/*'
-            onChange={handleFileSelect}
+            onInput={handleFileSelect}
             className='hidden'
+            ref={fileSelectorRef}
          />
          <button
             type='submit'
             disabled={!selectedFile}
-            className='btn btn-accent join-item h-16 w-36 text-2xl disabled:scale-75 transition-transform'
+            className='btn btn-accent join-item h-16 w-36 text-2xl disabled:scale-75 transition-transform ease-out'
          >
             Scan
          </button>
