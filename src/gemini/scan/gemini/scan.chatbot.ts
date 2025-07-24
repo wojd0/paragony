@@ -1,59 +1,60 @@
-import { FileMetadataResponse, GoogleAIFileManager } from '@google/generative-ai/server';
-import { SCAN_GENERATION_CONFIG, ScanResponseSchema } from './scan.generation-config';
-import { SCAN } from './scan.prompts.json';
-import { GenerationConfig, GoogleGenerativeAI } from '@google/generative-ai';
+import {
+   SCAN_GENERATION_CONFIG,
+   ScanResponseSchema,
+} from './scan.generation-config';
+import { GoogleGenAI, File, DeleteFileResponse } from '@google/genai';
 import { getGeminiEnv } from '@/gemini/environmentConfiguration';
 
 export class ScanChatbot {
    private chatbotApiKey: string = getGeminiEnv('GEMINI_CHATBOT_API_KEY');
    private chatbotModelId: string = getGeminiEnv('GEMINI_CHATBOT_MODEL');
 
-   private genAI: GoogleGenerativeAI = new GoogleGenerativeAI(this.chatbotApiKey);
-   private fileManager: GoogleAIFileManager = new GoogleAIFileManager(this.chatbotApiKey);
-
-   async setupChat(systemInstruction: string, generationConfig: GenerationConfig) {
-      const model = this.genAI.getGenerativeModel({
-         model: this.chatbotModelId,
-         systemInstruction
-      });
-      return model.startChat({ generationConfig });
-   }
+   private genAI = new GoogleGenAI({
+      apiKey: this.chatbotApiKey,
+   });
+   private fileManager = this.genAI.files;
 
    async requestScan(
       filePath: string,
-      mimeType: string
+      mimeType: string,
    ): Promise<ScanResponseSchema> {
       const file = await this.uploadFile(filePath, mimeType);
 
-      const chatSession = await this.setupChat(SCAN.REQUEST_IMAGE_SCAN, SCAN_GENERATION_CONFIG);
-      const result = await chatSession.sendMessage([
-         {
-            text: ''
-         },
-         {
-            fileData: {
-               fileUri: file.uri,
-               mimeType: file.mimeType
-            }
-         }
-      ]);
+      const result = await this.genAI.models.generateContent({
+         model: this.chatbotModelId,
+         config: SCAN_GENERATION_CONFIG,
+         contents: [
+            {
+               fileData: {
+                  fileUri: file.uri,
+                  mimeType,
+               },
+            },
+         ],
+      });
 
       await this.deleteFile(file);
 
-      return JSON.parse(result.response.text());
+      return JSON.parse(result.text || '{}');
    }
 
-   private async uploadFile(path: string, mimeType: string) {
-      const uploadResult = await this.fileManager.uploadFile(path, {
-         mimeType,
-         displayName: path
+   private async uploadFile(path: string, mimeType: string): Promise<File> {
+      const uploadResult = await this.fileManager.upload({
+         file: path,
+         config: {
+            mimeType,
+            displayName: path,
+         },
       });
-      const file = uploadResult.file;
-      console.log(`Uploaded file ${file.displayName} as: ${file.name}`);
-      return file;
+      console.log(
+         `Uploaded file ${uploadResult.displayName} as: ${uploadResult.name}`,
+      );
+      return uploadResult;
    }
 
-   private async deleteFile(file: FileMetadataResponse) {
-      await this.fileManager.deleteFile(file.name);
+   private deleteFile(file: File): Promise<DeleteFileResponse> {
+      return this.fileManager.delete({
+         name: file.name || file.displayName || '',
+      });
    }
 }

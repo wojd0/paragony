@@ -1,7 +1,5 @@
 import type { Config } from 'tailwindcss';
 
-import daisyui from 'daisyui';
-
 export default {
    content: [
       './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -15,6 +13,5 @@ export default {
             foreground: 'var(--foreground)',
          },
       },
-   },
-   plugins: [daisyui],
+   }
 } satisfies Config;

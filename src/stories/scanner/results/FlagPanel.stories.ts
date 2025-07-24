@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { fn } from '@storybook/test';
-import TotalFlagPanel from '@/components/scan-results/result-table/flag-panel/TotalFlagPanel';
+import TotalFlagPanel from '@/components/scan-results/result-list/TotalFlagPanel';
 import { ReceiptItem } from '@/components/scan-results/result-table/ResultTable';
 
 const meta = {
@@ -9,10 +8,7 @@ const meta = {
    parameters: {
       layout: 'centered',
    },
-   tags: ['autodocs'],
-   args: {
-      onFlagsChange: fn(),
-   },
+   tags: ['autodocs']
 } satisfies Meta<typeof TotalFlagPanel>;
 
 export default meta;
@@ -47,21 +43,18 @@ const sampleItems: ReceiptItem[] = [
 
 export const Default: Story = {
    args: {
-      flags: ['red', 'blue'],
       items: sampleItems,
    },
 };
 
 export const WithNoFlags: Story = {
    args: {
-      flags: [],
       items: sampleItems,
    },
 };
 
 export const WithMultipleFlags: Story = {
    args: {
-      flags: ['red', 'blue', 'green'],
       items: sampleItems,
    },
 };

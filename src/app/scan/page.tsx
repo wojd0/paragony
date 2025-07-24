@@ -1,9 +1,9 @@
 'use client';
 
 import { useState } from 'react';
-import { Receipt } from '@/components/scan-results/result-table/ResultTable';
 import ScanResult from '@/components/scan-results/ScanResult';
 import ScanForm from '@/components/scan-results/ScanForm';
+import { Receipt } from '@/components/scan-results/result-list/ResultList';
 
 export default function Scan() {
    const [receipt, setReceipt] = useState<Receipt | null>(null);
@@ -27,7 +27,7 @@ export default function Scan() {
    }
 
    return (
-      <div className="h-full bg-base-400">
+      <div className='h-full bg-base-400'>
          {receiptImage && receipt ? (
             <ScanResult
                receiptImage={receiptImage}

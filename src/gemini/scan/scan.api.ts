@@ -1,9 +1,9 @@
-import { Receipt } from '@/components/scan-results/result-table/ResultTable';
 import { ScanChatbot } from './gemini/scan.chatbot';
 import scanResponseParser from './scan.response-parser';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
+import { Receipt } from '@/components/scan-results/result-list/ResultList';
 
 export async function scanImage(file: File): Promise<Receipt> {
    const localFile = await uploadImage(file);
@@ -17,9 +17,8 @@ export async function scanImage(file: File): Promise<Receipt> {
 }
 
 async function uploadImage(
-   file: File
+   file: File,
 ): Promise<{ path: string; delete: () => Promise<void> }> {
-
    const destinationDirPath = path.join(process.cwd(), 'public', 'uploads');
    const destinationFilePath = path.join(destinationDirPath, file.name);
 
@@ -35,6 +34,6 @@ async function uploadImage(
       path: destinationFilePath,
       delete: () => {
          return fs.unlink(destinationFilePath);
-      }
+      },
    };
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { FlagIcon } from '@heroicons/react/16/solid';
 import FlagBar from './FlagBar';
 import SelectedFlagGrid from './SelectedFlagGrid';
@@ -19,21 +19,26 @@ export const AVAILABLE_FLAGS: Flag[] = [
 ];
 
 export interface FlagPickerProps {
-   flags: Flag[];
-   handleFlagChange: (newFlags: Flag) => void;
+   flagIds: string[];
+   handleFlagChange: (newFlags: Flag[]) => void;
 }
 
 export default function FlagPicker({
-   flags,
+   flagIds,
    handleFlagChange,
 }: FlagPickerProps) {
    const [isOpen, setIsOpen] = useState(false);
-   const [selectedFlags, setSelectedFlags] = useState<Flag[]>([]);
+
+   const flags: Flag[] = useMemo(() => {
+      return flagIds
+         .map((flagId) => AVAILABLE_FLAGS.find((flag) => flag.id === flagId))
+         .filter((flag) => !!flag);
+   }, [flagIds]);
 
    const togglePicker = () => setIsOpen(!isOpen);
 
    const handleFlagSelect = (flagId: string) => {
-      let newFlags = [...selectedFlags];
+      let newFlags = [...flags];
       if (newFlags.some((flag) => flag.id === flagId)) {
          newFlags = newFlags.filter((flag) => flag.id !== flagId);
       } else {
@@ -42,7 +47,7 @@ export default function FlagPicker({
             newFlags.push(newFlag);
          }
       }
-      setSelectedFlags(
+      handleFlagChange(
          newFlags.sort((flagA, flagB) => (flagA.order > flagB.order ? 1 : -1)),
       );
    };
@@ -50,16 +55,16 @@ export default function FlagPicker({
    return (
       <div className='relative'>
          <button className='btn btn-ghost w-20 h-12' onClick={togglePicker}>
-            {selectedFlags.length === 0 ? (
+            {flags.length === 0 ? (
                <FlagIcon className='w-6 h-6' />
             ) : (
-               <SelectedFlagGrid selectedFlags={selectedFlags} />
+               <SelectedFlagGrid selectedFlags={flags} />
             )}
          </button>
 
          {isOpen && (
             <FlagBar
-               selectedFlags={selectedFlags}
+               selectedFlags={flags}
                handleFlagSelect={handleFlagSelect}
             />
          )}

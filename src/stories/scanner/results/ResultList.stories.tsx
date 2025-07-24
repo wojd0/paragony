@@ -56,7 +56,6 @@ export const Default: Story = {
       metadata: {
          currency: 'USD',
       },
-      total: 38,
-      flags: ['flag1', 'flag2']
+      total: 38
    }
 };

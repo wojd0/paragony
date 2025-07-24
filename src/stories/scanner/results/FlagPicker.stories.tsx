@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FlagPicker from '@/components/scan-results/result-list/flag-picker/FlagPicker';
+import { fn } from '@storybook/test';
 
 const meta = {
    title: 'Scanner/Results/FlagPicker',
@@ -14,17 +15,19 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Empty: Story = {
-   args: {},
+   args: {flagIds: ['red', 'blue', 'green', 'yellow', 'pink', 'orange'], handleFlagChange: fn()},
 };
 
 export const WithSelectedFlags: Story = {
    args: {
-      initialFlags: ['red', 'blue', 'green'],
+      flagIds: ['red', 'blue', 'green'],
+      handleFlagChange: fn(),
    },
 };
 
 export const FullSelection: Story = {
    args: {
-      initialFlags: ['red', 'blue', 'green', 'yellow', 'pink', 'orange'],
+      flagIds: ['red', 'blue', 'green', 'yellow', 'pink', 'orange'],
+      handleFlagChange: fn(),
    },
 };

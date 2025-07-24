@@ -1,4 +1,4 @@
-import { GenerationConfig, ResponseSchema, SchemaType } from '@google/generative-ai';
+import { GenerationConfig, Type } from '@google/genai';
 
 export interface ScanResponseSchema {
    items: {
@@ -19,71 +19,62 @@ export interface ScanResponseSchema {
 /**
  * Typed schema of the structured AI response
  */
-const RESPONSE_SCHEMA: ResponseSchema = {
-   type: SchemaType.OBJECT,
-   properties: {
-      items: {
-         type: SchemaType.ARRAY,
-         items: {
-            type: SchemaType.OBJECT,
-            properties: {
-               name: {
-                  type: SchemaType.STRING,
-               },
-               pricePerUnit: {
-                  type: SchemaType.NUMBER,
-               },
-               reductionPerUnit: {
-                  type: SchemaType.NUMBER,
-               },
-               amount: {
-                  type: SchemaType.NUMBER,
-               },
-               totalPrice: {
-                  type: SchemaType.NUMBER,
-               },
-            },
-            required: [
-               'name',
-               'pricePerUnit',
-               'reductionPerUnit',
-               'amount',
-               'totalPrice',
-            ],
-         },
-      },
-      total: {
-         type: SchemaType.NUMBER,
-      },
-      currency: {
-         type: SchemaType.NUMBER,
-      },
-      metadata: {
-         type: SchemaType.OBJECT,
-         properties: {
-            nameAddress: {
-               type: SchemaType.STRING,
-            },
-            dateUtc: {
-               type: SchemaType.STRING,
-            },
-            currency: {
-               type: SchemaType.NUMBER
-            }
-         },
-      },
-   },
-   required: ['items', 'total'],
-};
-
-/**
- * Configuration for the Gemini model to extract data from a receipt.
- */
 export const SCAN_GENERATION_CONFIG: GenerationConfig = {
-   temperature: 1,
-   topP: 0.95,
-   topK: 40,
-   maxOutputTokens: 8192,
    responseMimeType: 'application/json',
-   responseSchema: RESPONSE_SCHEMA,
+   responseSchema: {
+      type: Type.OBJECT,
+      properties: {
+         items: {
+            type: Type.ARRAY,
+            items: {
+               type: Type.OBJECT,
+               properties: {
+                  name: {
+                     type: Type.STRING,
+                  },
+                  pricePerUnit: {
+                     type: Type.NUMBER,
+                  },
+                  reductionPerUnit: {
+                     type: Type.NUMBER,
+                  },
+                  amount: {
+                     type: Type.NUMBER,
+                  },
+                  totalPrice: {
+                     type: Type.NUMBER,
+                  },
+               },
+               required: [
+                  'name',
+                  'pricePerUnit',
+                  'reductionPerUnit',
+                  'amount',
+                  'totalPrice',
+               ],
+            },
+         },
+         total: {
+            type: Type.NUMBER,
+         },
+         currency: {
+            type: Type.NUMBER,
+         },
+         metadata: {
+            type: Type.OBJECT,
+            properties: {
+               nameAddress: {
+                  type: Type.STRING,
+               },
+               dateUtc: {
+                  type: Type.STRING,
+               },
+               currency: {
+                  type: Type.NUMBER,
+               },
+            },
+         },
+      },
+      required: ['items', 'total'],
+   },
 };

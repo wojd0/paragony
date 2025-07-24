@@ -1,6 +1,7 @@
 import { ReceiptMetadata } from '@/components/scan-results/AdditionalMetadata';
 import { useState } from 'react';
-import FlagPicker from './flag-picker/FlagPicker';
+import FlagPicker, { Flag } from './flag-picker/FlagPicker';
+import TotalFlagPanel from '@/components/scan-results/result-list/TotalFlagPanel';
 
 export interface ReceiptItem {
    name: string;
@@ -15,33 +16,21 @@ export interface Receipt {
    items: ReceiptItem[];
    metadata: ReceiptMetadata;
    total: number;
-   flags: string[];
 }
 
 export default function ResultList({
    items,
    metadata,
    total,
-   flags,
    onReceiptChange,
 }: Receipt & { onReceiptChange: (receipt: Receipt) => void }) {
    const [editMode, setEditMode] = useState(false);
 
-   function handleItemChange(index: number, changedItem: ReceiptItem) {
-      const newItems = [...items];
-      newItems[index] = {
-         ...changedItem,
-         totalPrice: changedItem.pricePerUnit * changedItem.amount,
-      };
-      const newTotal = newItems.reduce((sum, item) => sum + item.totalPrice, 0);
-      onReceiptChange({ items: newItems, metadata, total: newTotal, flags });
-   }
-
-   function handleEnabledFlagsChange(enabledFlags: string[]) {
+   function handleEnabledFlagsChange(enabledFlags: Flag[]) {
       const newItems = items.map((item) => ({
          ...item,
          selectedFlags: item.selectedFlags.filter((flag) =>
-            enabledFlags.includes(flag),
+            enabledFlags.some((enabledFlag) => enabledFlag.id === flag),
          ),
       }));
 
@@ -49,7 +38,6 @@ export default function ResultList({
          items: newItems,
          metadata,
          total,
-         flags: [...enabledFlags],
       });
    }
 
@@ -75,13 +63,15 @@ export default function ResultList({
                   </div>
                   <div className='text-xs uppercase font-semibold opacity-60 whitespace-nowrap'>
                      {item.pricePerUnit.toFixed(2)}{' '}
-                     {metadata?.currency || 'PLN'}{' '} ✕ {item.amount}
+                     {metadata?.currency || 'PLN'} ✕ {item.amount}
                   </div>
                </div>
                <div></div>
-               <FlagPicker />
+               <FlagPicker flagIds={item.selectedFlags} handleFlagChange={handleEnabledFlagsChange} />
             </li>
          ))}
+
+         <TotalFlagPanel items={items} />
       </ul>
    );
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import FlagSelector from './FlagSelector';
 import { ReceiptItem } from '../ResultTable';
 import EditModeCells from '@/components/scan-results/result-table/row/EditModeCells';
 import FlagCell from '@/components/scan-results/result-table/row/cells/FlagCell';

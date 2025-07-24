@@ -1,4 +1,4 @@
-import { Receipt } from '@/components/scan-results/result-table/ResultTable';
+import { Receipt } from '@/components/scan-results/result-list/ResultList';
 import { ScanResponseSchema } from './gemini/scan.generation-config';
 
 function roundPrice(price: number) {
@@ -6,7 +6,7 @@ function roundPrice(price: number) {
 }
 
 export default function scanResponseParser(
-   response: ScanResponseSchema
+   response: ScanResponseSchema,
 ): Receipt {
    return {
       items: response.items.map((item) => ({
@@ -15,15 +15,9 @@ export default function scanResponseParser(
          pricePerUnit: roundPrice(item.pricePerUnit),
          reductionPerUnit: roundPrice(item.reductionPerUnit),
          totalPrice: roundPrice(item.totalPrice),
-         selectedFlags: []
+         selectedFlags: [],
       })),
-      metadata: Object.entries(response?.metadata || {}).map(
-         ([key, value]) => ({
-            name: key,
-            value: value
-         })
-      ),
-      total: roundPrice(response.total),
-      flags: []
+      metadata: response?.metadata || {},
+      total: roundPrice(response.total)
    };
 }

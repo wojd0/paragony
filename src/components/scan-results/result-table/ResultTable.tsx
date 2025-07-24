@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import AdditionalMetadata, { ReceiptMetadata } from '../AdditionalMetadata';
-import TotalFlagPanel from './flag-panel/TotalFlagPanel';
+import TotalFlagPanel from '../result-list/TotalFlagPanel';
 import ReceiptTableRows from './row/ReceiptTableRows';
 
 export interface ReceiptItem {
@@ -12,9 +12,9 @@ export interface ReceiptItem {
    selectedFlags: string[];
 }
 
-export interface Receipt {
+export interface ReceiptOld {
    items: ReceiptItem[];
-   metadata: ReceiptMetadata[];
+   metadata: ReceiptMetadata;
    total: number;
    flags: string[];
 }
@@ -22,10 +22,9 @@ export interface Receipt {
 export default function ResultTable({
    items,
    metadata,
-   total,
    flags,
    onReceiptChange,
-}: Receipt & { onReceiptChange: (receipt: Receipt) => void }) {
+}: ReceiptOld & { onReceiptChange: (receipt: ReceiptOld) => void }) {
    const [editMode, setEditMode] = useState(false);
 
    function handleItemChange(index: number, changedItem: ReceiptItem) {
@@ -38,36 +37,36 @@ export default function ResultTable({
       onReceiptChange({ items: newItems, metadata, total: newTotal, flags });
    }
 
-   function handleEnabledFlagsChange(enabledFlags: string[]) {
-      const newItems = items.map((item) => ({
-         ...item,
-         selectedFlags: item.selectedFlags.filter((flag) =>
-            enabledFlags.includes(flag),
-         ),
-      }));
+   // function handleEnabledFlagsChange(enabledFlags: string[]) {
+   //    const newItems = items.map((item) => ({
+   //       ...item,
+   //       selectedFlags: item.selectedFlags.filter((flag) =>
+   //          enabledFlags.includes(flag),
+   //       ),
+   //    }));
 
-      onReceiptChange({
-         items: newItems,
-         metadata,
-         total,
-         flags: [...enabledFlags],
-      });
-   }
+   //    onReceiptChange({
+   //       items: newItems,
+   //       metadata,
+   //       total,
+   //       flags: [...enabledFlags],
+   //    });
+   // }
 
    return (
-      <div className="">
-         <div className="flex justify-end mb-4">
-            <label className="label cursor-pointer">
-               <span className="label-text mr-2">Edit Mode</span>
+      <div className=''>
+         <div className='flex justify-end mb-4'>
+            <label className='label cursor-pointer'>
+               <span className='label-text mr-2'>Edit Mode</span>
                <input
-                  type="checkbox"
-                  className="toggle toggle-primary"
+                  type='checkbox'
+                  className='toggle toggle-primary'
                   checked={editMode}
                   onChange={() => setEditMode(!editMode)}
                />
             </label>
          </div>
-         <div className="max-w-full overflow-x-auto">
+         <div className='max-w-full overflow-x-auto'>
             <table
                className={`table receipt-table ${
                   flags.length === 0
@@ -76,21 +75,21 @@ export default function ResultTable({
                }`}
             >
                <colgroup>
-                  <col className="w-1/12" />
+                  <col className='w-1/12' />
                   <col />
-                  <col className="w-1/12" />
-                  <col className="w-1/12" />
-                  <col className="w-1/12" />
-                  <col className="w-1/12" />
+                  <col className='w-1/12' />
+                  <col className='w-1/12' />
+                  <col className='w-1/12' />
+                  <col className='w-1/12' />
                </colgroup>
                <thead>
                   <tr>
                      <th>Flag</th>
                      <th>Name</th>
-                     <th className="text-right">Amount</th>
-                     <th className="text-right">Price per unit</th>
-                     <th className="text-right">Reduction per unit</th>
-                     <th className="text-right">Total price</th>
+                     <th className='text-right'>Amount</th>
+                     <th className='text-right'>Price per unit</th>
+                     <th className='text-right'>Reduction per unit</th>
+                     <th className='text-right'>Total price</th>
                   </tr>
                </thead>
                <tbody>
@@ -99,29 +98,22 @@ export default function ResultTable({
                      flags={flags}
                      onItemChange={handleItemChange}
                      editMode={editMode}
-                     currency={
-                        metadata.find((m) => m.name === 'currency')?.value ||
-                        'PLN'
-                     }
+                     currency={metadata?.['currency'] || 'PLN'}
                   />
-                  <tr className="border-t-2">
+                  {/* <tr className="border-t-2">
                      <td />
                      <td colSpan={3} />
                      <td className="text-right">Total</td>
                      <td className="text-right font-bold underline underline-offset-2">
-                        {total.toFixed(2)}&nbsp;PLN
+                        {total.toFixed(2)}&nbsp;{currency}
                      </td>
-                  </tr>
+                  </tr> */}
                </tbody>
             </table>
          </div>
          <AdditionalMetadata metadata={metadata} />
-         <div className="h-6"></div>
-         <TotalFlagPanel
-            flags={flags}
-            items={items}
-            onFlagsChange={handleEnabledFlagsChange}
-         />
+         <div className='h-6'></div>
+         <TotalFlagPanel items={items} />
       </div>
    );
 }
