@@ -1,18 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
-import ResultList from '@/components/scan-results/result-list/ResultList';
+import ItemList from '@/components/scan-results/result-list/ResultList';
 
 const meta = {
    title: 'Scanner/Results/ResultList',
-   component: ResultList,
+   component: ItemList,
    parameters: {
       layout: 'centered',
    },
    tags: ['autodocs'],
    args: {
-      onReceiptChange: fn()
-   }
-} satisfies Meta<typeof ResultList>;
+      onReceiptChange: fn(),
+   },
+} satisfies Meta<typeof ItemList>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -56,6 +56,6 @@ export const Default: Story = {
       metadata: {
          currency: 'USD',
       },
-      total: 38
-   }
+      total: 38,
+   },
 };

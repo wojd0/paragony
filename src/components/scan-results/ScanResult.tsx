@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import ResultList, { Receipt } from './result-list/ResultList';
+import ItemList, { Receipt } from './result-list/ResultList';
 
 export default function ScanResult({
    receiptImage,
@@ -32,7 +32,7 @@ export default function ScanResult({
          <div className='flex-grow'>
             <h2 className='text-4xl font-bold text-center'>Scan result</h2>
             <div className='w-full mx-auto mt-10'>
-               <ResultList
+               <ItemList
                   items={receipt.items}
                   metadata={receipt.metadata}
                   total={receipt.total}

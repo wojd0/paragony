@@ -18,7 +18,7 @@ export interface Receipt {
    total: number;
 }
 
-export default function ResultList({
+export default function ItemList({
    items,
    metadata,
    total,
@@ -67,7 +67,10 @@ export default function ResultList({
                   </div>
                </div>
                <div></div>
-               <FlagPicker flagIds={item.selectedFlags} handleFlagChange={handleEnabledFlagsChange} />
+               <FlagPicker
+                  flagIds={item.selectedFlags}
+                  handleFlagChange={handleEnabledFlagsChange}
+               />
             </li>
          ))}
 
