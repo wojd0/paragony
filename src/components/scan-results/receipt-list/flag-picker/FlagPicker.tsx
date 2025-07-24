@@ -2,26 +2,7 @@ import { useMemo, useState } from 'react';
 import { FlagIcon } from '@heroicons/react/16/solid';
 import FlagBar from './FlagBar';
 import SelectedFlagGrid from './SelectedFlagGrid';
-
-export interface Flag {
-   id: string;
-   color: string;
-   order: number;
-}
-
-export const AVAILABLE_FLAGS: Flag[] = [
-   { id: 'red', color: '#FF0000', order: 1 },
-   { id: 'blue', color: '#0000FF', order: 2 },
-   { id: 'green', color: '#00FF00', order: 3 },
-   { id: 'yellow', color: '#FFFF00', order: 4 },
-   { id: 'pink', color: '#FFC0CB', order: 5 },
-   { id: 'orange', color: '#FFA500', order: 6 },
-];
-
-export interface FlagPickerProps {
-   flagIds: string[];
-   handleFlagChange: (newFlags: Flag[]) => void;
-}
+import { FlagPickerProps, Flag, AVAILABLE_FLAGS } from './types';
 
 export default function FlagPicker({
    flagIds,

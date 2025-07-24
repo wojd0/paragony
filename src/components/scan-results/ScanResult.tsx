@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import ItemList, { Receipt } from './result-list/ResultList';
+import { Receipt } from './receipt-list/receipt-list.types';
+import ItemList from './receipt-list/ReceiptList';
 
 export default function ScanResult({
    receiptImage,

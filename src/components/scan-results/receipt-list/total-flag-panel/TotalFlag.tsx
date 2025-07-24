@@ -2,7 +2,7 @@ import { FlagIcon as FlagIconSolid } from '@heroicons/react/24/solid';
 import { TrashIcon } from '@heroicons/react/16/solid';
 import { useMemo, useState } from 'react';
 import ClipboardToast from '@/components/shared/ClipboardToast';
-import { AVAILABLE_FLAGS } from '@/components/scan-results/result-list/flag-picker/FlagPicker';
+import { AVAILABLE_FLAGS } from '../flag-picker/types';
 
 export interface PriceFlagProps {
    flagId: string;

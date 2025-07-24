@@ -1,6 +1,6 @@
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/24/solid';
 import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
-import { AVAILABLE_FLAGS, Flag } from './FlagPicker';
+import { Flag, AVAILABLE_FLAGS } from './types';
 
 export interface FlagBar {
    selectedFlags: Flag[];

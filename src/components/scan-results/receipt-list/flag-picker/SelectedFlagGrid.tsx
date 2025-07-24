@@ -1,6 +1,6 @@
 import React from 'react';
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/16/solid';
-import { Flag } from './FlagPicker';
+import { Flag } from './types';
 
 interface FlagGridProps {
    selectedFlags: Flag[]; // Array of selected flag colors
