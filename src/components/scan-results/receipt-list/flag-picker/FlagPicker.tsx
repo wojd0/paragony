@@ -22,8 +22,6 @@ export default function FlagPicker({
          .filter((flag) => !!flag);
    }, [flagIds]);
 
-   const togglePicker = () => openChange(!isOpen);
-
    const handleFlagSelect = (flagId: string) => {
       let newFlags = [...flags];
       if (newFlags.some((flag) => flag.id === flagId)) {
@@ -41,15 +39,24 @@ export default function FlagPicker({
 
    return (
       <div className='flex items-center justify-end ml-3'>
-         {isOpen && (
-            <FlagBar
-               selectedFlags={flags}
-               handleFlagSelect={handleFlagSelect}
-            />
-         )}
-         <button className='btn btn-ghost p-0' onClick={togglePicker}>
-            <SelectedFlagGrid selectedFlags={flags} />
-         </button>
+         <div className='md:hidden flex items-center justify-end'>
+            {isOpen && (
+               <FlagRollout
+                  selectedFlags={flags}
+                  handleFlagSelect={handleFlagSelect}
+               />
+            )}
+            <button
+               className='btn btn-ghost p-0'
+               onClick={() => openChange(!isOpen)}
+            >
+               <SelectedBarGrid selectedFlags={flags} />
+            </button>
+         </div>
+         <FlagToggler
+            selectedFlags={flags}
+            handleFlagSelect={handleFlagSelect}
+         />
       </div>
    );
 }
@@ -59,14 +66,52 @@ export interface FlagBar {
    handleFlagSelect: (flagId: string) => void;
 }
 
-export function FlagBar({ selectedFlags, handleFlagSelect }: FlagBar) {
+interface FlagIconToggleProps {
+   flag: Flag;
+   isSelected: boolean;
+   sizeClass: string;
+}
+
+function FlagIconToggle({ flag, isSelected, sizeClass }: FlagIconToggleProps) {
+   return isSelected ? (
+      <FlagIconSolid className={sizeClass} style={{ color: flag.color }} />
+   ) : (
+      <FlagIconOutline className={sizeClass} style={{ color: flag.color }} />
+   );
+}
+
+export function FlagToggler({
+   selectedFlags,
+   handleFlagSelect,
+}: FlagBar) {
+   return (
+      <div className='hidden md:flex flex-row-reverse items-center gap-1'>
+         {AVAILABLE_FLAGS.map((flag: Flag) => (
+            <button
+               key={flag.id}
+               className='btn btn-ghost p-0'
+               onClick={() => handleFlagSelect(flag.id)}
+            >
+               <FlagIconToggle
+                  flag={flag}
+                  isSelected={selectedFlags.some(
+                     (selectedFlag) => selectedFlag.id === flag.id,
+                  )}
+                  sizeClass={'w-6 h-6'}
+               />
+            </button>
+         ))}
+      </div>
+   );
+}
+
+export function FlagRollout({ selectedFlags, handleFlagSelect }: FlagBar) {
    const maxWidth = AVAILABLE_FLAGS.length; // 20px for w-5, 8px for p-2 (left and right)
-   
 
    return (
       <ul
          className={`flex flex-row-reverse justify-between grow max-w-full md:max-w-1/2`}
-         style={{ maxWidth: `calc(${maxWidth} * var(--spacing))`}}
+         style={{ maxWidth: `calc(${maxWidth} * var(--spacing))` }}
       >
          {AVAILABLE_FLAGS.map((flag: Flag) => (
             <li
@@ -74,19 +119,13 @@ export function FlagBar({ selectedFlags, handleFlagSelect }: FlagBar) {
                className='cursor-pointer p-2 bg-base-100'
                onClick={() => handleFlagSelect(flag.id)}
             >
-               {selectedFlags.some(
-                  (selectedFlag) => selectedFlag.id === flag.id,
-               ) ? (
-                  <FlagIconSolid
-                     className={`w-5 h-5`}
-                     style={{ color: flag.color }}
-                  />
-               ) : (
-                  <FlagIconOutline
-                     className={`w-5 h-5`}
-                     style={{ color: flag.color }}
-                  />
-               )}
+               <FlagIconToggle
+                  flag={flag}
+                  isSelected={selectedFlags.some(
+                     (selectedFlag) => selectedFlag.id === flag.id,
+                  )}
+                  sizeClass={'w-5 h-5'}
+               />
             </li>
          ))}
       </ul>
@@ -97,7 +136,7 @@ interface FlagGridProps {
    selectedFlags: Flag[]; // Array of selected flag colors
 }
 
-export function SelectedFlagGrid({ selectedFlags }: FlagGridProps) {
+export function SelectedBarGrid({ selectedFlags }: FlagGridProps) {
    return (
       <div className='flex flex-row-reverse justify-end h-full'>
          {AVAILABLE_FLAGS.map((availableFlag, index) => {
