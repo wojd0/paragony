@@ -10,6 +10,7 @@ export default function ItemList({
    onReceiptChange,
 }: Receipt & { onReceiptChange: (receipt: Receipt) => void }) {
    const [editMode, setEditMode] = useState(false);
+   const [openPickerIndex, setOpenPickerIndex] = useState<number | null>(null);
 
    function onItemChange(newItem: ReceiptItem, index: number): void {
       const newItems = [...items];
@@ -19,6 +20,10 @@ export default function ItemList({
          metadata,
          total,
       });
+   }
+
+   function changePickerOpen(isOpen: boolean, index: number): void {
+      setOpenPickerIndex(isOpen ? index : null);
    }
 
    return (
@@ -40,6 +45,8 @@ export default function ItemList({
                key={index}
                {...item}
                itemChanged={(newItem) => onItemChange(newItem, index)}
+               isPickerOpen={openPickerIndex === index}
+               changePickerOpen={(isOpen) => changePickerOpen(isOpen, index)}
             />
          ))}
 

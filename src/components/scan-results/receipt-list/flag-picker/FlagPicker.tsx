@@ -1,22 +1,29 @@
 import { useMemo, useState } from 'react';
 import { FlagIcon } from '@heroicons/react/16/solid';
-import { FlagPickerProps, Flag, AVAILABLE_FLAGS } from './types';
+import { Flag, AVAILABLE_FLAGS } from './types';
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/16/solid';
 import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
 
+export interface FlagPickerProps {
+   flagIds: string[];
+   flagChange: (newFlags: Flag[]) => void;
+   isOpen: boolean;
+   openChange: (isOpen: boolean) => void;
+}
+
 export default function FlagPicker({
    flagIds,
-   handleFlagChange,
+   isOpen,
+   openChange,
+   flagChange,
 }: FlagPickerProps) {
-   const [isOpen, setIsOpen] = useState(false);
-
    const flags: Flag[] = useMemo(() => {
       return flagIds
          .map((flagId) => AVAILABLE_FLAGS.find((flag) => flag.id === flagId))
          .filter((flag) => !!flag);
    }, [flagIds]);
 
-   const togglePicker = () => setIsOpen(!isOpen);
+   const togglePicker = () => openChange(!isOpen);
 
    const handleFlagSelect = (flagId: string) => {
       let newFlags = [...flags];
@@ -28,7 +35,7 @@ export default function FlagPicker({
             newFlags.push(newFlag);
          }
       }
-      handleFlagChange(
+      flagChange(
          newFlags.sort((flagA, flagB) => (flagA.order > flagB.order ? 1 : -1)),
       );
    };

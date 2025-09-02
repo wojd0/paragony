@@ -1,12 +1,15 @@
 import FlagPicker from '../flag-picker/FlagPicker';
 import { Flag } from '../flag-picker/types';
 import { ReceiptItem } from '../receipt-list.types';
+import { useState } from 'react';
 
 export default function ReceiptListItem({
    selectedFlags,
    itemChanged,
+   isPickerOpen,
+   changePickerOpen,
    ...receiptItem
-}: ReceiptItem & { itemChanged: (newItem: ReceiptItem) => void }) {
+}: ReceiptItem & { itemChanged: (newItem: ReceiptItem) => void, isPickerOpen: boolean, changePickerOpen: (isOpen: boolean) => void }) {
    const { name, amount, pricePerUnit } = receiptItem;
 
    function onFlagChange(flags: Flag[]) {
@@ -28,10 +31,7 @@ export default function ReceiptListItem({
             </div>
          </div>
          <div className='fixed right-0 w-full'>
-            <FlagPicker
-               flagIds={selectedFlags}
-               handleFlagChange={onFlagChange}
-            />
+            <FlagPicker flagIds={selectedFlags} flagChange={onFlagChange} isOpen={isPickerOpen} openChange={changePickerOpen} />
          </div>
       </li>
    );

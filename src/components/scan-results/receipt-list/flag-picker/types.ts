@@ -12,8 +12,3 @@ export const AVAILABLE_FLAGS: Flag[] = [
    { id: 'pink', color: '#FFC0CB', order: 5 },
    { id: 'orange', color: '#FFA500', order: 6 },
 ];
-
-export interface FlagPickerProps {
-   flagIds: string[];
-   handleFlagChange: (newFlags: Flag[]) => void;
-}
