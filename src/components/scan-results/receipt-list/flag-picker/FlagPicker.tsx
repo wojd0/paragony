@@ -65,13 +65,13 @@ export function FlagBar({ selectedFlags, handleFlagSelect }: FlagBar) {
 
    return (
       <ul
-         className={`flex flex-row-reverse justify-between grow bg-base-100 max-w-full md:max-w-1/2`}
+         className={`flex flex-row-reverse justify-between grow max-w-full md:max-w-1/2`}
          style={{ maxWidth: `calc(${maxWidth} * var(--spacing))`}}
       >
          {AVAILABLE_FLAGS.map((flag: Flag) => (
             <li
                key={flag.id}
-               className='cursor-pointer p-2'
+               className='cursor-pointer p-2 bg-base-100'
                onClick={() => handleFlagSelect(flag.id)}
             >
                {selectedFlags.some(
@@ -107,7 +107,7 @@ export function SelectedFlagGrid({ selectedFlags }: FlagGridProps) {
             return (
                <div
                   key={index}
-                  className={`w-2 mx-[1px] md:w-4 ${isSelected ? '' : 'bg-base-200'}`}
+                  className={`w-2 mx-[1px] xs:w-3 ${isSelected ? '' : 'bg-base-200'}`}
                   style={{
                      backgroundColor: isSelected
                         ? availableFlag.color
