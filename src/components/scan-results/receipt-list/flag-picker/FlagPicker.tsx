@@ -1,5 +1,4 @@
 import { useMemo, useState } from 'react';
-import { FlagIcon } from '@heroicons/react/16/solid';
 import { Flag, AVAILABLE_FLAGS } from './types';
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/16/solid';
 import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
@@ -48,12 +47,8 @@ export default function FlagPicker({
                handleFlagSelect={handleFlagSelect}
             />
          )}
-         <button className='btn btn-ghost size-10 p-0' onClick={togglePicker}>
-            {flags.length === 0 ? (
-               <FlagIcon className='size-5' />
-            ) : (
-               <SelectedFlagGrid selectedFlags={flags} />
-            )}
+         <button className='btn btn-ghost p-0' onClick={togglePicker}>
+            <SelectedFlagGrid selectedFlags={flags} />
          </button>
       </div>
    );
@@ -69,7 +64,7 @@ export function FlagBar({ selectedFlags, handleFlagSelect }: FlagBar) {
 
    return (
       <ul
-         className={`flex justify-between grow bg-base-100 max-w-full`}
+         className={`flex flex-row-reverse justify-between grow bg-base-100 max-w-full`}
          style={{ maxWidth: `calc(min(${maxWidth} * var(--spacing), 100%))` }}
       >
          {AVAILABLE_FLAGS.map((flag: Flag) => (
@@ -103,16 +98,21 @@ interface FlagGridProps {
 
 export function SelectedFlagGrid({ selectedFlags }: FlagGridProps) {
    return (
-      <div className='flex flex-col justify-center h-full'>
-         {selectedFlags.map((flag, index) => (
-            <>
-               <FlagIconSolid
+      <div className='flex flex-row-reverse justify-end h-full'>
+         {AVAILABLE_FLAGS.map((availableFlag, index) => {
+            const isSelected = selectedFlags.some(
+               (selectedFlag) => selectedFlag.id === availableFlag.id,
+            );
+            return (
+               <div
                   key={index}
-                  className='w-4 h-4'
-                  style={{ color: flag.color }}
+                  className='w-2 mx-[1px]'
+                  style={{
+                     backgroundColor: isSelected ? availableFlag.color : '#ccc', // Subtle grey for unselected flags
+                  }}
                />
-            </>
-         ))}
+            );
+         })}
       </div>
    );
 }

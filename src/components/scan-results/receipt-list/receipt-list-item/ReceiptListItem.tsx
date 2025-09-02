@@ -30,7 +30,7 @@ export default function ReceiptListItem({
                {pricePerUnit.toFixed(2)} PLN ✕ {amount}
             </div>
          </div>
-         <div className='fixed right-0 w-full'>
+         <div className='absolute w-full h-full'>
             <FlagPicker flagIds={selectedFlags} flagChange={onFlagChange} isOpen={isPickerOpen} openChange={changePickerOpen} />
          </div>
       </li>
