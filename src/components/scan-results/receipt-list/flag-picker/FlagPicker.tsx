@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import { FlagIcon } from '@heroicons/react/16/solid';
-import FlagBar from './FlagBar';
-import SelectedFlagGrid from './SelectedFlagGrid';
 import { FlagPickerProps, Flag, AVAILABLE_FLAGS } from './types';
+import { FlagIcon as FlagIconSolid } from '@heroicons/react/16/solid';
+import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';
 
 export default function FlagPicker({
    flagIds,
@@ -34,21 +34,78 @@ export default function FlagPicker({
    };
 
    return (
-      <div className='relative'>
-         <button className='btn btn-ghost w-20 h-12' onClick={togglePicker}>
-            {flags.length === 0 ? (
-               <FlagIcon className='w-6 h-6' />
-            ) : (
-               <SelectedFlagGrid selectedFlags={flags} />
-            )}
-         </button>
-
+      <div className='flex items-center justify-end ml-3'>
          {isOpen && (
             <FlagBar
                selectedFlags={flags}
                handleFlagSelect={handleFlagSelect}
             />
          )}
+         <button className='btn btn-ghost size-10 p-0' onClick={togglePicker}>
+            {flags.length === 0 ? (
+               <FlagIcon className='size-5' />
+            ) : (
+               <SelectedFlagGrid selectedFlags={flags} />
+            )}
+         </button>
+      </div>
+   );
+}
+
+export interface FlagBar {
+   selectedFlags: Flag[];
+   handleFlagSelect: (flagId: string) => void;
+}
+
+export function FlagBar({ selectedFlags, handleFlagSelect }: FlagBar) {
+   const maxWidth = AVAILABLE_FLAGS.length * (20 + 2 * 8); // 20px for w-5, 8px for p-2 (left and right)
+
+   return (
+      <ul
+         className={`flex justify-between grow bg-base-100 max-w-full`}
+         style={{ maxWidth: `calc(min(${maxWidth} * var(--spacing), 100%))` }}
+      >
+         {AVAILABLE_FLAGS.map((flag: Flag) => (
+            <li
+               key={flag.id}
+               className='cursor-pointer p-2'
+               onClick={() => handleFlagSelect(flag.id)}
+            >
+               {selectedFlags.some(
+                  (selectedFlag) => selectedFlag.id === flag.id,
+               ) ? (
+                  <FlagIconSolid
+                     className={`w-5 h-5`}
+                     style={{ color: flag.color }}
+                  />
+               ) : (
+                  <FlagIconOutline
+                     className={`w-5 h-5`}
+                     style={{ color: flag.color }}
+                  />
+               )}
+            </li>
+         ))}
+      </ul>
+   );
+}
+
+interface FlagGridProps {
+   selectedFlags: Flag[]; // Array of selected flag colors
+}
+
+export function SelectedFlagGrid({ selectedFlags }: FlagGridProps) {
+   return (
+      <div className='flex flex-col justify-center h-full'>
+         {selectedFlags.map((flag, index) => (
+            <>
+               <FlagIconSolid
+                  key={index}
+                  className='w-4 h-4'
+                  style={{ color: flag.color }}
+               />
+            </>
+         ))}
       </div>
    );
 }

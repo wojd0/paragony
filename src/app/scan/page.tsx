@@ -27,7 +27,7 @@ export default function Scan() {
    }
 
    return (
-      <div className='h-full bg-base-400'>
+      <div className='h-full bg-base-100'>
          {receiptImage && receipt ? (
             <ScanResult
                receiptImage={receiptImage}
