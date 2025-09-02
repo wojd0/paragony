@@ -60,12 +60,13 @@ export interface FlagBar {
 }
 
 export function FlagBar({ selectedFlags, handleFlagSelect }: FlagBar) {
-   const maxWidth = AVAILABLE_FLAGS.length * (20 + 2 * 8); // 20px for w-5, 8px for p-2 (left and right)
+   const maxWidth = AVAILABLE_FLAGS.length; // 20px for w-5, 8px for p-2 (left and right)
+   
 
    return (
       <ul
-         className={`flex flex-row-reverse justify-between grow bg-base-100 max-w-full`}
-         style={{ maxWidth: `calc(min(${maxWidth} * var(--spacing), 100%))` }}
+         className={`flex flex-row-reverse justify-between grow bg-base-100 max-w-full md:max-w-1/2`}
+         style={{ maxWidth: `calc(${maxWidth} * var(--spacing))`}}
       >
          {AVAILABLE_FLAGS.map((flag: Flag) => (
             <li
@@ -106,9 +107,11 @@ export function SelectedFlagGrid({ selectedFlags }: FlagGridProps) {
             return (
                <div
                   key={index}
-                  className='w-2 mx-[1px]'
+                  className={`w-2 mx-[1px] md:w-4 ${isSelected ? '' : 'bg-base-200'}`}
                   style={{
-                     backgroundColor: isSelected ? availableFlag.color : '#ccc', // Subtle grey for unselected flags
+                     backgroundColor: isSelected
+                        ? availableFlag.color
+                        : undefined,
                   }}
                />
             );
