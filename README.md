@@ -1,24 +1,34 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Paragony
+
+A Next.js application for receipt scanning and management using Google Gemini AI.
 
 ## Getting Started
 
-First, run the development server:
+### 1. Install Dependencies
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+### 2. Set Up Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```bash
+DATABASE_URL="file:./lib/prisma/dev.db"
+GEMINI_CHATBOT_API_KEY="your_gemini_api_key_here"
+GEMINI_CHATBOT_MODEL="gemini-1.5-flash"
+```
+
+Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/).
+
+### 3. Run the Development Server
+
+```bash
 bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
 
