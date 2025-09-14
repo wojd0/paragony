@@ -1,19 +1,19 @@
 export type ReceiptMetadata = Record<string, string>;
 
 export default function AdditionalMetadata({
-   metadata = {},
+	metadata = {},
 }: {
-   metadata: ReceiptMetadata;
+	metadata: ReceiptMetadata;
 }) {
-   return (
-      <div className="flex flex-col gap-4 text-right mt-12">
-         {Object.entries(metadata).map(([name, value], index) => (
-            <div className="card" key={index}>
-               {name}
-               <br />
-               <span className="font-bold text-xl">{value}</span>
-            </div>
-         ))}
-      </div>
-   );
+	return (
+		<div className="flex flex-col gap-4 text-right mt-12">
+			{Object.entries(metadata).map(([name, value], index) => (
+				<div className="card" key={index}>
+					{name}
+					<br />
+					<span className="font-bold text-xl">{value}</span>
+				</div>
+			))}
+		</div>
+	);
 }

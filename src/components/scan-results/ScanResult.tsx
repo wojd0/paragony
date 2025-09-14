@@ -1,46 +1,46 @@
-import { useMemo, useState } from 'react';
-import { Receipt } from './receipt-list/receipt-list.types';
-import ItemList from './receipt-list/ReceiptList';
+import { useMemo, useState } from "react";
+import { Receipt } from "./receipt-list/receipt-list.types";
+import ItemList from "./receipt-list/ReceiptList";
 
 export default function ScanResult({
-   receiptImage,
-   receipt,
-   onReceiptChange,
+	receiptImage,
+	receipt,
+	onReceiptChange,
 }: {
-   receiptImage: File;
-   receipt: Receipt;
-   onReceiptChange: (receipt: Receipt) => void;
+	receiptImage: File;
+	receipt: Receipt;
+	onReceiptChange: (receipt: Receipt) => void;
 }) {
-   const [imageUrl, setImageUrl] = useState<string | null>(null);
+	const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-   useMemo(() => {
-      const reader = new FileReader();
-      reader.onload = () => {
-         setImageUrl(reader.result as string);
-      };
-      reader.readAsDataURL(receiptImage);
-   }, [receiptImage]);
+	useMemo(() => {
+		const reader = new FileReader();
+		reader.onload = () => {
+			setImageUrl(reader.result as string);
+		};
+		reader.readAsDataURL(receiptImage);
+	}, [receiptImage]);
 
-   return (
-      <div className='w-full flex flex-col md:flex-row gap-6 p-4'>
-         {imageUrl && (
-            <img
-               src={imageUrl}
-               alt={receiptImage?.name}
-               className='object-contain max-h-screen w-1/2 mx-auto md:h-fit'
-            />
-         )}
-         <div className='flex-grow'>
-            <h2 className='text-4xl font-bold text-center'>Scan result</h2>
-            <div className='w-full mx-auto mt-10'>
-               <ItemList
-                  items={receipt.items}
-                  metadata={receipt.metadata}
-                  total={receipt.total}
-                  onReceiptChange={onReceiptChange}
-               />
-            </div>
-         </div>
-      </div>
-   );
+	return (
+		<div className="w-full flex flex-col md:flex-row gap-6 p-4">
+			{imageUrl && (
+				<img
+					src={imageUrl}
+					alt={receiptImage?.name}
+					className="object-contain max-h-screen w-1/2 mx-auto md:h-fit"
+				/>
+			)}
+			<div className="flex-grow">
+				<h2 className="text-4xl font-bold text-center">Scan result</h2>
+				<div className="w-full mx-auto mt-10">
+					<ItemList
+						items={receipt.items}
+						metadata={receipt.metadata}
+						total={receipt.total}
+						onReceiptChange={onReceiptChange}
+					/>
+				</div>
+			</div>
+		</div>
+	);
 }
