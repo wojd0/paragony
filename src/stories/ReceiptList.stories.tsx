@@ -112,3 +112,11 @@ export const WithFlags: Story = {
 		],
 	},
 };
+
+export const Empty: Story = {
+	args: {
+		...Default.args,
+		items: [],
+		total: 0,
+	},
+};

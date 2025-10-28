@@ -8,7 +8,8 @@
 		"start": "next start",
 		"lint": "next lint",
 		"storybook": "storybook dev -p 6006",
-		"build-storybook": "storybook build"
+		"build-storybook": "storybook build",
+		"test-storybook": "test-storybook --coverage"
 	},
 	"dependencies": {
 		"@google/genai": "^0.14.1",
@@ -31,6 +32,7 @@
 		"@storybook/nextjs": "8.5.5",
 		"@storybook/react": "8.5.5",
 		"@storybook/test": "8.5.5",
+		"@storybook/test-runner": "^0.23.0",
 		"@tailwindcss/forms": "^0.5.10",
 		"@tailwindcss/typography": "^0.5.16",
 		"@types/node": "^20",
