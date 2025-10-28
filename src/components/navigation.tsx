@@ -7,7 +7,7 @@ export default function Navigation() {
 			<div className="navbar-start">
 				<Link href="/">
 					<button className="btn btn-ghost btn-circle text-base-content hover:bg-base-200">
-						<HomeIcon className="h-5 w-5" />
+						<HomeIcon width={25} height={25} />
 					</button>
 				</Link>
 				<Link
@@ -25,7 +25,7 @@ export default function Navigation() {
 			</div>
 			<div className="navbar-end">
 				<button className="btn btn-ghost btn-circle text-base-content hover:bg-base-200">
-					<UserIcon className="h-5 w-5" />
+					<UserIcon width={25} height={25} />
 				</button>
 			</div>
 		</nav>

@@ -14,9 +14,10 @@
 			"**/*.jsx",
 			"**/*.json",
 			"**/*.css",
-			"**/*.md"
-		],
-		"experimentalScannerIgnores": [".next/**", "node_modules/**"]
+			"**/*.md",
+			"!.next/**",
+			"!node_modules/**"
+		]
 	},
 	"formatter": {
 		"enabled": true,
