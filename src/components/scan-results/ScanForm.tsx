@@ -1,23 +1,56 @@
 import React, { useRef, useState } from "react";
 import FileList from "./FileList";
 import FileUpload from "./FileUpload";
+import UploadNote from "./UploadNote";
 
 export default function ScanForm({
-	onFileUploaded,
+	onFilesUploaded,
 }: {
-	onFileUploaded: (resultFile: File) => void;
+	onFilesUploaded: (files: File[]) => void;
 }) {
-	const [selectedFile, setSelectedFile] = useState<File | null>(null);
+	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 	const fileSelectorRef = useRef<HTMLInputElement>(null);
 
 	function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
 		if (event.target.files && event.target.files.length > 0) {
-			setSelectedFile(event.target.files[0]);
+			const newFiles = Array.from(event.target.files);
+
+			const renamedFiles = newFiles.map((file) => {
+				if (selectedFiles.some((existing) => existing.name === file.name)) {
+					return renameFile(file);
+				}
+				return file;
+			});
+
+			setSelectedFiles((prev) => [...prev, ...renamedFiles]);
 		}
 	}
 
-	function handleFileClear() {
-		setSelectedFile(null);
+	function renameFile(file: File): File {
+		const existingNames = selectedFiles.map((f) => f.name);
+		let counter = 1;
+		let newName = getFileNameWithCounter(file.name, counter);
+
+		while (existingNames.includes(newName)) {
+			counter++;
+			newName = getFileNameWithCounter(file.name, counter);
+		}
+
+		return new File([file], newName, { type: file.type });
+	}
+
+	function getFileNameWithCounter(fileName: string, counter: number): string {
+		const lastDotIndex = fileName.lastIndexOf(".");
+		if (lastDotIndex === -1) {
+			return `${fileName} (${counter})`;
+		}
+		const name = fileName.substring(0, lastDotIndex);
+		const extension = fileName.substring(lastDotIndex);
+		return `${name} (${counter})${extension}`;
+	}
+
+	function handleFileRemove(index: number) {
+		setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
 		if (fileSelectorRef.current) {
 			fileSelectorRef.current.value = "";
 		}
@@ -25,8 +58,8 @@ export default function ScanForm({
 
 	function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
-		if (selectedFile) {
-			onFileUploaded(selectedFile);
+		if (selectedFiles.length > 0) {
+			onFilesUploaded(selectedFiles);
 		}
 	}
 
@@ -36,8 +69,10 @@ export default function ScanForm({
 			onSubmit={handleFormSubmit}
 		>
 			<div className="w-full">
-				{selectedFile ? (
-					<FileList file={selectedFile} onClear={handleFileClear} />
+				{selectedFiles.length > 0 ? (
+					<div className="space-y-4">
+						<FileList files={selectedFiles} onRemove={handleFileRemove} />
+					</div>
 				) : (
 					<FileUpload />
 				)}
@@ -46,17 +81,18 @@ export default function ScanForm({
 					name="scanFileUpload"
 					id="scanFileUpload"
 					accept="image/*,.pdf"
+					multiple
 					onInput={handleFileSelect}
 					className="hidden"
 					ref={fileSelectorRef}
-					aria-label="Select file to scan"
+					aria-label="Select files to scan"
 				/>
 			</div>
 
 			<button
 				type="submit"
-				disabled={!selectedFile}
-				className={`btn btn-primary btn-lg w-full max-w-xs text-lg font-medium transition-all duration-200 ${selectedFile
+				disabled={selectedFiles.length === 0}
+				className={`btn btn-primary btn-lg w-full max-w-xs text-lg font-medium transition-all duration-200 ${selectedFiles.length > 0
 					? "opacity-100 translate-y-0"
 					: "opacity-0 translate-y-4 pointer-events-none"
 					}`}
