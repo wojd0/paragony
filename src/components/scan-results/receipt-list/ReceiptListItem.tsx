@@ -1,5 +1,5 @@
-import FlagPicker from '../flag-picker/FlagPicker';
-import { Flag } from '../flag-picker/types';
+import FlagPicker from './flag-picker/FlagPicker';
+import { Flag } from '@/shared/types';
 import { ReceiptItem } from '@/shared/types';
 import { useState } from 'react';
 

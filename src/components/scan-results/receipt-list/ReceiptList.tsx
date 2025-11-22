@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import ReceiptListItem from './receipt-list-item/ReceiptListItem';
+import ReceiptListItem from './ReceiptListItem';
 import TotalFlagPanel from './total-flag-panel/TotalFlagPanel';
 import { Receipt, ReceiptItem } from '@/shared/types';
 import { ListBulletIcon, FlagIcon } from '@heroicons/react/24/outline';

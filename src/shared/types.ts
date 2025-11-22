@@ -14,3 +14,8 @@ export interface Receipt {
    metadata: ReceiptMetadata;
    total: number;
 }
+export interface Flag {
+   id: string;
+   color: string;
+   order: number;
+}
