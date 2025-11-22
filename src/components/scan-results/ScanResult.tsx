@@ -1,76 +1,80 @@
-import { useMemo, useState } from "react";
-import { Receipt } from "./receipt-list/receipt-list.types";
-import ItemList from "./receipt-list/ReceiptList";
+import { useMemo, useState } from 'react';
+import { Receipt } from '@/shared/types';
+import ItemList from './receipt-list/ReceiptList';
 
 export default function ScanResult({
-	receiptImages,
-	receipts,
-	onReceiptChange,
+   receiptImages,
+   receipts,
+   onReceiptChange,
 }: {
-	receiptImages: File[];
-	receipts: Receipt[];
-	onReceiptChange: (index: number, receipt: Receipt) => void;
+   receiptImages: File[];
+   receipts: Receipt[];
+   onReceiptChange: (index: number, receipt: Receipt) => void;
 }) {
-	const [selectedIndex, setSelectedIndex] = useState(0);
-	const [imageUrls, setImageUrls] = useState<string[]>([]);
+   const [selectedIndex, setSelectedIndex] = useState(0);
+   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-	useMemo(() => {
-		const urls: string[] = [];
-		receiptImages.forEach((image, index) => {
-			const reader = new FileReader();
-			reader.onload = () => {
-				urls[index] = reader.result as string;
-				if (urls.filter(Boolean).length === receiptImages.length) {
-					setImageUrls([...urls]);
-				}
-			};
-			reader.readAsDataURL(image);
-		});
-	}, [receiptImages]);
+   useMemo(() => {
+      const urls: string[] = [];
+      receiptImages.forEach((image, index) => {
+         const reader = new FileReader();
+         reader.onload = () => {
+            urls[index] = reader.result as string;
+            if (urls.filter(Boolean).length === receiptImages.length) {
+               setImageUrls([...urls]);
+            }
+         };
+         reader.readAsDataURL(image);
+      });
+   }, [receiptImages]);
 
-	const currentReceipt = receipts[selectedIndex];
-	const currentImage = imageUrls[selectedIndex];
+   const currentReceipt = receipts[selectedIndex];
+   const currentImage = imageUrls[selectedIndex];
 
-	return (
-		<div className="w-full flex flex-col gap-6 p-4">
-			{receipts.length > 1 && (
-				<div className="flex flex-wrap gap-2 justify-center">
-					{receipts.map((_, index) => (
-						<button
-							key={index}
-							onClick={() => setSelectedIndex(index)}
-							className={`btn ${selectedIndex === index ? "btn-primary" : "btn-outline"}`}
-						>
-							Receipt {index + 1}
-						</button>
-					))}
-				</div>
-			)}
+   return (
+      <div className='w-full flex flex-col gap-6 p-4'>
+         {receipts.length > 1 && (
+            <div className='flex flex-wrap gap-2 justify-center'>
+               {receipts.map((_, index) => (
+                  <button
+                     key={index}
+                     onClick={() => setSelectedIndex(index)}
+                     className={`btn ${selectedIndex === index ? 'btn-primary' : 'btn-outline'}`}
+                  >
+                     Receipt {index + 1}
+                  </button>
+               ))}
+            </div>
+         )}
 
-			<div className="w-full flex flex-col md:flex-row gap-6">
-				{currentImage && (
-					<img
-						src={currentImage}
-						alt={receiptImages[selectedIndex]?.name}
-						className="object-contain max-h-screen w-full md:w-1/2 mx-auto md:h-fit"
-					/>
-				)}
-				<div className="flex-grow">
-					<h2 className="text-4xl font-bold text-center">
-						{receipts.length > 1 ? `Receipt ${selectedIndex + 1} of ${receipts.length}` : "Scan result"}
-					</h2>
-					<div className="w-full mx-auto mt-10">
-						{currentReceipt && (
-							<ItemList
-								items={currentReceipt.items}
-								metadata={currentReceipt.metadata}
-								total={currentReceipt.total}
-								onReceiptChange={(receipt) => onReceiptChange(selectedIndex, receipt)}
-							/>
-						)}
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+         <div className='w-full flex flex-col md:flex-row gap-6'>
+            {currentImage && (
+               <img
+                  src={currentImage}
+                  alt={receiptImages[selectedIndex]?.name}
+                  className='object-contain max-h-screen w-full md:w-1/2 mx-auto md:h-fit'
+               />
+            )}
+            <div className='flex-grow'>
+               <h2 className='text-4xl font-bold text-center'>
+                  {receipts.length > 1
+                     ? `Receipt ${selectedIndex + 1} of ${receipts.length}`
+                     : 'Scan result'}
+               </h2>
+               <div className='w-full mx-auto mt-10'>
+                  {currentReceipt && (
+                     <ItemList
+                        items={currentReceipt.items}
+                        metadata={currentReceipt.metadata}
+                        total={currentReceipt.total}
+                        onReceiptChange={(receipt) =>
+                           onReceiptChange(selectedIndex, receipt)
+                        }
+                     />
+                  )}
+               </div>
+            </div>
+         </div>
+      </div>
+   );
 }

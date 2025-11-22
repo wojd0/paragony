@@ -3,7 +3,7 @@ import scanResponseParser from './scan.response-parser';
 import path from 'node:path';
 import { existsSync } from 'node:fs';
 import fs from 'node:fs/promises';
-import { Receipt } from '@/components/scan-results/receipt-list/receipt-list.types';
+import { Receipt } from '@/shared/types';
 
 export async function scanImage(file: File): Promise<Receipt> {
    const localFile = await uploadImage(file);

@@ -44,3 +44,5 @@ next-env.d.ts
 # database
 lib/prisma/dev.db
 *storybook.log
+
+/public/uploads
