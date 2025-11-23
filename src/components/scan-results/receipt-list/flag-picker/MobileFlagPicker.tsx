@@ -1,5 +1,5 @@
 import { FlagBar } from './FlagPicker';
-import { AVAILABLE_FLAGS } from '../constants';
+import { AVAILABLE_FLAGS } from '../../constants';
 import { Flag } from '@/shared/types';
 import { FlagIcon as FlagIconSolid } from '@heroicons/react/16/solid';
 import { FlagIcon as FlagIconOutline } from '@heroicons/react/24/outline';

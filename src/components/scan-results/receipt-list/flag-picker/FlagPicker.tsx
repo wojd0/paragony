@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { AVAILABLE_FLAGS } from '../constants';
+import { AVAILABLE_FLAGS } from '../../constants';
 import { Flag } from '@/shared/types';
 import { MobileFlagRollout, MobileFlagToggler } from './MobileFlagPicker';
 

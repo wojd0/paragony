@@ -1,4 +1,4 @@
-import { Flag } from './types';
+import { Flag } from './receipt-list/types';
 
 export const AVAILABLE_FLAGS: Flag[] = [
    { id: 'red', color: '#FF0000', order: 1 },

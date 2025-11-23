@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Receipt } from '@/shared/types';
 import ItemList from './receipt-list/ReceiptList';
+import TotalFlagPanel from './total-flag/TotalFlagPanel';
+import { useFlagsFromItems } from './total-flag/flagsFromItemMemo';
+import { removeFlagFromItems } from './total-flag/flagSummaryExtractor';
 
 export default function ScanResult({
    receiptImages,
@@ -13,6 +16,8 @@ export default function ScanResult({
 }) {
    const [selectedIndex, setSelectedIndex] = useState(0);
    const [imageUrls, setImageUrls] = useState<string[]>([]);
+   const currentReceipt = receipts[selectedIndex];
+   const currentImage = imageUrls[selectedIndex];
 
    useMemo(() => {
       const urls: string[] = [];
@@ -28,8 +33,14 @@ export default function ScanResult({
       });
    }, [receiptImages]);
 
-   const currentReceipt = receipts[selectedIndex];
-   const currentImage = imageUrls[selectedIndex];
+   function handleFlagRemove(flagId: string) {
+      onReceiptChange(selectedIndex, {
+         ...currentReceipt,
+         items: removeFlagFromItems(flagId, currentReceipt),
+      });
+   }
+
+   const calculatedFlags = useFlagsFromItems(currentReceipt?.items);
 
    return (
       <div className='w-full flex flex-col gap-6 p-4'>
@@ -72,6 +83,11 @@ export default function ScanResult({
                         }
                      />
                   )}
+
+                  <TotalFlagPanel
+                     flags={calculatedFlags}
+                     onFlagRemove={handleFlagRemove}
+                  />
                </div>
             </div>
          </div>

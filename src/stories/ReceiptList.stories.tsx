@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import ReceiptList from '../components/scan-results/receipt-list/ReceiptList';
 import { Flag } from '@/shared/types';
-import { AVAILABLE_FLAGS } from '../components/scan-results/receipt-list/constants';
+import { AVAILABLE_FLAGS } from '../components/scan-results/constants';
 
 const meta = {
    title: 'ReceiptList',

@@ -39,13 +39,19 @@ export class ScanChatbot {
 	}
 
 	private async uploadFile(path: string, mimeType: string): Promise<File> {
-		const uploadResult = await this.fileManager.upload({
-			file: path,
-			config: {
-				mimeType,
-				displayName: path,
-			},
-		});
+		let uploadResult;
+		try {
+			uploadResult = await this.fileManager.upload({
+				file: path,
+				config: {
+					mimeType,
+					displayName: path,
+				},
+			});
+		} catch (e) {
+			console.log(e);
+			throw 'shit happens';
+		}
 		console.log(
 			`Uploaded file ${uploadResult.displayName} as: ${uploadResult.name}`,
 		);
