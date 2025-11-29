@@ -10,7 +10,7 @@ export default function ScanForm({
 }) {
 	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 	const fileSelectorRef = useRef<HTMLInputElement>(null);
-	const scanUploadId = useId();
+	const scanInputId = useId();
 
 	function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
 		if (event.target.files && event.target.files.length > 0) {
@@ -75,12 +75,12 @@ export default function ScanForm({
 						<FileList files={selectedFiles} onRemove={handleFileRemove} />
 					</div>
 				) : (
-					<FileUpload />
+					<FileUpload scanInputId={scanInputId} />
 				)}
 				<input
 					type='file'
 					name='scanFileUpload'
-					id={scanUploadId}
+					id={scanInputId}
 					accept='image/*,.pdf'
 					multiple
 					onInput={handleFileSelect}

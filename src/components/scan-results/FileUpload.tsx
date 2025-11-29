@@ -3,10 +3,10 @@
 import { ArrowUpTrayIcon } from '@heroicons/react/16/solid';
 import UploadNote from './UploadNote';
 
-export default function FileUpload() {
+export default function FileUpload({ scanInputId }: { scanInputId: string }) {
 	return (
 		<label
-			htmlFor='scanFileUpload'
+			htmlFor={scanInputId}
 			className='flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-base-300 rounded-lg cursor-pointer bg-base-200 hover:bg-base-300 transition-colors duration-200 p-6 text-center'
 		>
 			<div className='flex flex-col items-center justify-center pt-5 pb-6'>
