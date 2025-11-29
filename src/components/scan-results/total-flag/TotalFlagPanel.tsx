@@ -10,7 +10,6 @@ export default function TotalFlagPanel({
 }) {
 	return (
 		<div className='card bg-base-200 w-full min-h-16'>
-			{JSON.stringify(flags)}
 			<div className='card-content p-3 flex flex-wrap'>
 				{Object.entries(flags).map(([flagId, total]) => (
 					<TotalFlag

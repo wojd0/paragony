@@ -15,8 +15,7 @@ export default function TotalFlag({ flagId, total, onRemove }: PriceFlagProps) {
 		return AVAILABLE_FLAGS.find((flag) => flag.id === flagId);
 	}, [flagId]);
 	return (
-		<button
-			type='button'
+		<div
 			key={flagId}
 			className='btn btn-ghost h-full flex flex-nowrap relative group basis-1/2 md:basis-1/5'
 		>
@@ -36,7 +35,7 @@ export default function TotalFlag({ flagId, total, onRemove }: PriceFlagProps) {
 					<TrashIcon />
 				</button>
 			)}
-		</button>
+		</div>
 	);
 }
 
