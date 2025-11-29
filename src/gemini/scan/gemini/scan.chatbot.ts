@@ -1,13 +1,13 @@
+import { type DeleteFileResponse, type File, GoogleGenAI } from '@google/genai';
+import { getGeminiEnv } from '@/gemini/environmentConfiguration';
 import {
 	SCAN_GENERATION_CONFIG,
-	ScanResponseSchema,
-} from "./scan.generation-config";
-import { GoogleGenAI, File, DeleteFileResponse } from "@google/genai";
-import { getGeminiEnv } from "@/gemini/environmentConfiguration";
+	type ScanResponseSchema,
+} from './scan.generation-config';
 
 export class ScanChatbot {
-	private chatbotApiKey: string = getGeminiEnv("GEMINI_CHATBOT_API_KEY");
-	private chatbotModelId: string = getGeminiEnv("GEMINI_CHATBOT_MODEL");
+	private chatbotApiKey: string = getGeminiEnv('GEMINI_CHATBOT_API_KEY');
+	private chatbotModelId: string = getGeminiEnv('GEMINI_CHATBOT_MODEL');
 
 	private genAI = new GoogleGenAI({
 		apiKey: this.chatbotApiKey,
@@ -35,11 +35,11 @@ export class ScanChatbot {
 
 		await this.deleteFile(file);
 
-		return JSON.parse(result.text || "{}");
+		return JSON.parse(result.text || '{}');
 	}
 
 	private async uploadFile(path: string, mimeType: string): Promise<File> {
-		let uploadResult;
+		let uploadResult: File;
 		try {
 			uploadResult = await this.fileManager.upload({
 				file: path,
@@ -60,7 +60,7 @@ export class ScanChatbot {
 
 	private deleteFile(file: File): Promise<DeleteFileResponse> {
 		return this.fileManager.delete({
-			name: file.name || file.displayName || "",
+			name: file.name || file.displayName || '',
 		});
 	}
 }

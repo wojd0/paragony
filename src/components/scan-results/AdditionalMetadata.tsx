@@ -6,12 +6,12 @@ export default function AdditionalMetadata({
 	metadata: ReceiptMetadata;
 }) {
 	return (
-		<div className="flex flex-col gap-4 text-right mt-12">
-			{Object.entries(metadata).map(([name, value], index) => (
-				<div className="card" key={index}>
+		<div className='flex flex-col gap-4 text-right mt-12'>
+			{Object.entries(metadata).map(([name, value]) => (
+				<div className='card' key={name}>
 					{name}
 					<br />
-					<span className="font-bold text-xl">{value}</span>
+					<span className='font-bold text-xl'>{value}</span>
 				</div>
 			))}
 		</div>

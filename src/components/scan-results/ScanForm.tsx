@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
-import FileList from "./FileList";
-import FileUpload from "./FileUpload";
-import UploadNote from "./UploadNote";
+import type React from 'react';
+import { useId, useRef, useState } from 'react';
+import FileList from './FileList';
+import FileUpload from './FileUpload';
 
 export default function ScanForm({
 	onFilesUploaded,
@@ -10,6 +10,7 @@ export default function ScanForm({
 }) {
 	const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 	const fileSelectorRef = useRef<HTMLInputElement>(null);
+	const scanUploadId = useId();
 
 	function handleFileSelect(event: React.ChangeEvent<HTMLInputElement>) {
 		if (event.target.files && event.target.files.length > 0) {
@@ -40,7 +41,7 @@ export default function ScanForm({
 	}
 
 	function getFileNameWithCounter(fileName: string, counter: number): string {
-		const lastDotIndex = fileName.lastIndexOf(".");
+		const lastDotIndex = fileName.lastIndexOf('.');
 		if (lastDotIndex === -1) {
 			return `${fileName} (${counter})`;
 		}
@@ -52,7 +53,7 @@ export default function ScanForm({
 	function handleFileRemove(index: number) {
 		setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
 		if (fileSelectorRef.current) {
-			fileSelectorRef.current.value = "";
+			fileSelectorRef.current.value = '';
 		}
 	}
 
@@ -65,37 +66,38 @@ export default function ScanForm({
 
 	return (
 		<form
-			className="flex flex-col items-center justify-center gap-6 py-10 px-4 w-full max-w-2xl mx-auto"
+			className='flex flex-col items-center justify-center gap-6 py-10 px-4 w-full max-w-2xl mx-auto'
 			onSubmit={handleFormSubmit}
 		>
-			<div className="w-full">
+			<div className='w-full'>
 				{selectedFiles.length > 0 ? (
-					<div className="space-y-4">
+					<div className='space-y-4'>
 						<FileList files={selectedFiles} onRemove={handleFileRemove} />
 					</div>
 				) : (
 					<FileUpload />
 				)}
 				<input
-					type="file"
-					name="scanFileUpload"
-					id="scanFileUpload"
-					accept="image/*,.pdf"
+					type='file'
+					name='scanFileUpload'
+					id={scanUploadId}
+					accept='image/*,.pdf'
 					multiple
 					onInput={handleFileSelect}
-					className="hidden"
+					className='hidden'
 					ref={fileSelectorRef}
-					aria-label="Select files to scan"
+					aria-label='Select files to scan'
 				/>
 			</div>
 
 			<button
-				type="submit"
+				type='submit'
 				disabled={selectedFiles.length === 0}
-				className={`btn btn-primary btn-lg w-full max-w-xs text-lg font-medium transition-all duration-200 ${selectedFiles.length > 0
-					? "opacity-100 translate-y-0"
-					: "opacity-0 translate-y-4 pointer-events-none"
-					}`}
+				className={`btn btn-primary btn-lg w-full max-w-xs text-lg font-medium transition-all duration-200 ${
+					selectedFiles.length > 0
+						? 'opacity-100 translate-y-0'
+						: 'opacity-0 translate-y-4 pointer-events-none'
+				}`}
 			>
 				Scan Receipt
 			</button>

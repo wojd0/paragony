@@ -1,5 +1,5 @@
-import { Receipt } from '@/shared/types';
-import { ScanResponseSchema } from "./gemini/scan.generation-config";
+import type { Receipt } from '@/shared/types';
+import type { ScanResponseSchema } from './gemini/scan.generation-config';
 
 function roundPrice(price: number) {
 	return Math.round(price * 100) / 100;

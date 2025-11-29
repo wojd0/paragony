@@ -1,4 +1,4 @@
-import { GenerationConfig, Type } from "@google/genai";
+import { type GenerationConfig, Type } from '@google/genai';
 
 export interface ScanResponseSchema {
 	items: {
@@ -20,7 +20,7 @@ export interface ScanResponseSchema {
  * Typed schema of the structured AI response
  */
 export const SCAN_GENERATION_CONFIG: GenerationConfig = {
-	responseMimeType: "application/json",
+	responseMimeType: 'application/json',
 	responseSchema: {
 		type: Type.OBJECT,
 		properties: {
@@ -46,11 +46,11 @@ export const SCAN_GENERATION_CONFIG: GenerationConfig = {
 						},
 					},
 					required: [
-						"name",
-						"pricePerUnit",
-						"reductionPerUnit",
-						"amount",
-						"totalPrice",
+						'name',
+						'pricePerUnit',
+						'reductionPerUnit',
+						'amount',
+						'totalPrice',
 					],
 				},
 			},
@@ -75,6 +75,6 @@ export const SCAN_GENERATION_CONFIG: GenerationConfig = {
 				},
 			},
 		},
-		required: ["items", "total"],
+		required: ['items', 'total'],
 	},
 };

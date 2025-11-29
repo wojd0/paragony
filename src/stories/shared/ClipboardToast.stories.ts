@@ -1,13 +1,10 @@
-import ClipboardToast from "@/components/shared/ClipboardToast";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
+import ClipboardToast from '@/components/shared/ClipboardToast';
 
 const meta = {
-	title: "Shared/ClipboardToast",
+	title: 'Shared/ClipboardToast',
 	component: ClipboardToast,
-	parameters: {
-		layout: "centered",
-	},
-	tags: ["autodocs"],
+	tags: ['autodocs'],
 	args: {
 		visible: false,
 	},
