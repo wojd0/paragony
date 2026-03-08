@@ -12,10 +12,9 @@ bun install
 
 ### 2. Set Up Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env` file in the root directory:
 
 ```bash
-DATABASE_URL="file:./lib/prisma/dev.db"
 GEMINI_CHATBOT_API_KEY="your_gemini_api_key_here"
 GEMINI_CHATBOT_MODEL="gemini-1.5-flash"
 ```
