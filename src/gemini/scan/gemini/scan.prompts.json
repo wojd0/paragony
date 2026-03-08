@@ -1,5 +1,0 @@
-{
-	"SCAN": {
-		"REQUEST_IMAGE_SCAN": "Z załączonego zdjęcia paragonu fiskalnego z polskiego sklepu, restauracji lub innej usługi wyczytaj dane w postaci zadanej struktury. Czytaj paragon linijka po linijce i dokładnie wyciągaj z niego wymagane dane. Jeśli któraś z niewymaganych danych jest trudna do uzyskania, po prostu pomiń ją w wyniku."
-	}
-}

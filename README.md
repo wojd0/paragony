@@ -1,45 +1,54 @@
 # Paragony
 
-A Next.js application for receipt scanning and management using Google Gemini AI.
+A receipt scanning and management app using Google Gemini AI. Built with **Expo** (React Native + Web) and **FastAPI** (Python).
+
+## Project Structure
+
+```
+paragony/
+├── backend/       # FastAPI Python backend
+│   ├── main.py
+│   ├── gemini_service.py
+│   ├── models.py
+│   ├── response_parser.py
+│   └── requirements.txt
+└── mobile/        # Expo (React Native + Web) frontend
+    ├── app/       # File-based routes (Expo Router)
+    └── src/       # Components, types, utils
+```
 
 ## Getting Started
 
-### 1. Install Dependencies
+### 1. Backend
 
 ```bash
-bun install
+cd backend
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
 ```
 
-### 2. Set Up Environment Variables
+Create a `backend/.env` file:
+```
+GEMINI_CHATBOT_API_KEY=your_gemini_api_key
+GEMINI_CHATBOT_MODEL=models/gemini-flash-lite-latest
+```
 
-Create a `.env` file in the root directory:
+### 2. Frontend
 
 ```bash
-GEMINI_CHATBOT_API_KEY="your_gemini_api_key_here"
-GEMINI_CHATBOT_MODEL="gemini-1.5-flash"
+cd mobile
+npm install
+npx expo start
 ```
 
-Get your Gemini API key from [Google AI Studio](https://aistudio.google.com/).
+- Press **w** for web
+- Press **i** for iOS simulator
+- Press **a** for Android emulator
 
-### 3. Run the Development Server
+## Tech Stack
 
-```bash
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Frontend**: Expo, React Native, Expo Router, NativeWind (Tailwind CSS)
+- **Backend**: FastAPI, Google Gemini AI (google-genai)
+- **Platforms**: iOS, Android, Web
