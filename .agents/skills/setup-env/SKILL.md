@@ -20,19 +20,27 @@ This skill creates the `.env` file required by the project. The project uses two
 
 1. Check if a `.env` file already exists. If it does, show its contents and ask whether to overwrite or keep it.
 
-2. Use the question tool to ask the user for:
-   - Their `GEMINI_CHATBOT_API_KEY` value
-   - Their preferred `GEMINI_CHATBOT_MODEL` (suggest `gemini-2.0-flash` as default)
+2. Use the question tool to ask the user for their `GEMINI_CHATBOT_API_KEY` value.
 
-3. Write the `.env` file:
+3. Fetch available models from the Gemini API using the provided API key:
 
-```
-# Gemini Chatbot Configuration
-GEMINI_CHATBOT_API_KEY=<user-provided-value>
-GEMINI_CHATBOT_MODEL=<user-provided-value>
-```
+   ```bash
+   curl -s "https://generativelanguage.googleapis.com/v1beta/models?key=<API_KEY>"
+   ```
 
-4. Ensure `.env` is listed in `.gitignore`. If not, ask the user if they want to add it.
+   From the response, select the **5 latest models** (by name/version) ensuring the selection includes **at least one `flash` model and at least one `pro` model**. Sort by recency (highest version numbers first). Only include `generateContent`-capable models (check `supportedGenerationMethods`).
+
+4. Use the question tool to ask the user which model to use, presenting the 5 selected models as options. Mark the latest flash model as `(Recommended)`.
+
+5. Write the `.env` file:
+
+   ```
+   # Gemini Chatbot Configuration
+   GEMINI_CHATBOT_API_KEY=<user-provided-value>
+   GEMINI_CHATBOT_MODEL=<user-selected-model>
+   ```
+
+6. Ensure `.env` is listed in `.gitignore`. If not, ask the user if they want to add it.
 
 ## Rules
 
